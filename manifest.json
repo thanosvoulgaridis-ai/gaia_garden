@@ -1,1 +1,22 @@
-
+{
+  "name": "ShiftKos — Gaia Garden",
+  "short_name": "ShiftKos",
+  "description": "Σύστημα Διαχείρισης Βαρδιών",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a1628",
+  "theme_color": "#c9a84c",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/fluency/192/clock--v1.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/fluency/512/clock--v1.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
