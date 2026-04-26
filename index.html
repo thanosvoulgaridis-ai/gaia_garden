@@ -299,14 +299,19 @@ function setNav(el, view) {
   if (view==='alerts') renderAlertsHistory();
 }
 function simulateSMS() {
-  const msg = smsMessages[smsIndex % smsMessages.length]; smsIndex++;
-  const now = new Date().toLocaleTimeString('el-GR', {hour:'2-digit',minute:'2-digit'});
-  document.getElementById('toast-time').textContent = now;
-  document.getElementById('toast-body').innerHTML = `<strong>⚠️ GAIA GARDEN:</strong> ${msg}`;
-  const toast = document.getElementById('sms-toast');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 5000);
+  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome')
+    .then(res => res.text())
+    .then(data => {
+      const now = new Date().toLocaleTimeString('el-GR', {hour:'2-digit',minute:'2-digit'});
+      document.getElementById('toast-time').textContent = now;
+      document.getElementById('toast-body').innerHTML = `<strong>⚠️ GAIA GARDEN:</strong> WhatsApp εστάλη στον Μάστερ!`;
+      const toast = document.getElementById('sms-toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+    })
+    .catch(err => console.error(err));
 }
+  
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
 function addEmployee() {
