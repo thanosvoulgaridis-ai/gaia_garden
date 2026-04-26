@@ -299,7 +299,10 @@ function setNav(el, view) {
   if (view==='alerts') renderAlertsHistory();
 }
 function simulateSMS() {
-  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome')
+  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome', {
+  method: 'GET',
+  mode: 'no-cors'
+})
     .then(res => res.text())
     .then(data => {
       const now = new Date().toLocaleTimeString('el-GR', {hour:'2-digit',minute:'2-digit'});
