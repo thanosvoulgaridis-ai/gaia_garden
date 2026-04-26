@@ -307,15 +307,7 @@ function simulateSMS() {
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 5000);
 }
-  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome', {
-  method: 'GET',
-  mode: 'no-cors'
-})
-.then(res => res.text())
-.then(data => {
-  ...
-})
-.catch(err => console.error(err));
+  
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
 function addEmployee() {
