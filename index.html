@@ -299,6 +299,14 @@ function setNav(el, view) {
   if (view==='alerts') renderAlertsHistory();
 }
 function simulateSMS() {
+  window.open('https://shiftkos-whatsapp-3139.twil.io/welcome', '_blank');
+  const now = new Date().toLocaleTimeString('el-GR', {hour:'2-digit',minute:'2-digit'});
+  document.getElementById('toast-time').textContent = now;
+  document.getElementById('toast-body').innerHTML = `<strong>⚠️ GAIA GARDEN:</strong> WhatsApp εστάλη στον Μάστερ!`;
+  const toast = document.getElementById('sms-toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 5000);
+}
   fetch('https://shiftkos-whatsapp-3139.twil.io/welcome', {
   method: 'GET',
   mode: 'no-cors'
