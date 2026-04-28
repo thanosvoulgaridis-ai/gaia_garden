@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="el">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><head>
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ShiftKos — Gaia Garden</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,9 +56,8 @@
   .section-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--cream); }
   .section-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
   .btn-small { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); border-radius: 8px; padding: 7px 14px; color: var(--gold); font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
-  .btn-alert { background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.3); color: var(--alert); }
   .dept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .dept-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; transition: all 0.3s; }
+  .dept-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; }
   .dept-header { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
   .dept-name { font-size: 14px; font-weight: 600; color: var(--cream); }
   .dept-count { font-size: 11px; background: rgba(201,168,76,0.15); color: var(--gold); padding: 3px 8px; border-radius: 6px; }
@@ -70,18 +70,10 @@
   .emp-status { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; cursor: pointer; transition: all 0.2s; }
   .emp-status.ok { background: rgba(76,175,125,0.15); border: 1px solid rgba(76,175,125,0.3); }
   .emp-status.missing { background: rgba(224,92,75,0.15); border: 1px solid rgba(224,92,75,0.3); }
-  .alerts-list { display: flex; flex-direction: column; gap: 10px; }
-  .alert-row { background: rgba(224,92,75,0.06); border: 1px solid rgba(224,92,75,0.2); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; gap: 14px; }
-  .alert-icon { font-size: 20px; flex-shrink: 0; }
-  .alert-info { flex: 1; }
-  .alert-name { font-size: 14px; color: var(--cream); font-weight: 500; }
-  .alert-detail { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .alert-time { font-size: 11px; color: rgba(224,92,75,0.8); }
-  .sms-badge { display: flex; align-items: center; gap: 5px; font-size: 11px; background: rgba(76,175,125,0.1); border: 1px solid rgba(76,175,125,0.2); border-radius: 6px; padding: 4px 10px; color: var(--success); white-space: nowrap; }
   .sms-toast { position: fixed; bottom: 24px; right: 24px; width: 340px; background: #111827; border-radius: 18px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); z-index: 100; transform: translateY(120px); opacity: 0; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.08); }
   .sms-toast.show { transform: translateY(0); opacity: 1; }
   .toast-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .toast-app { width: 34px; height: 34px; background: #1a73e8; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .toast-app { width: 34px; height: 34px; background: #25D366; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
   .toast-sender { font-size: 13px; font-weight: 600; }
   .toast-app-name { font-size: 11px; color: rgba(255,255,255,0.4); }
   .toast-time { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.3); }
@@ -99,8 +91,14 @@
   .btn-save { background: linear-gradient(135deg, var(--gold), #8a6020); border: none; border-radius: 10px; padding: 10px 24px; color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
   .view { display: none; }
   .view.active { display: block; }
+  .loading { text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; }
+  .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(201,168,76,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .db-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; background: rgba(76,175,125,0.12); border: 1px solid rgba(76,175,125,0.25); border-radius: 6px; padding: 2px 8px; color: var(--success); margin-left: 8px; vertical-align: middle; }
 </style>
-</head><body>
+</head>
+<body>
+
 <div class="sidebar">
   <div class="sidebar-logo">
     <div class="logo-text">Shift<span>Kos</span></div>
@@ -111,11 +109,11 @@
     <div class="nav-item active" onclick="setNav(this,'dashboard')"><span class="icon">📊</span> Dashboard</div>
     <div class="nav-item" onclick="setNav(this,'employees')"><span class="icon">👥</span> Εργαζόμενοι</div>
     <div class="nav-item" onclick="setNav(this,'schedule')"><span class="icon">📅</span> Πρόγραμμα</div>
-    <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις<span class="nav-badge">3</span></div>
+    <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις <span class="nav-badge" id="alert-badge">0</span></div>
   </div>
   <div class="nav-section" style="margin-top:12px">
     <div class="nav-label">Σύστημα</div>
-    <div class="nav-item" onclick="simulateSMS()"><span class="icon">📱</span> Test SMS</div>
+    <div class="nav-item" onclick="simulateSMS()"><span class="icon">📱</span> Test WhatsApp</div>
     <div class="nav-item"><span class="icon">⚙️</span> Ρυθμίσεις</div>
   </div>
   <div class="sidebar-footer">
@@ -126,168 +124,233 @@
     </div>
   </div>
 </div>
+
 <div class="main">
   <div class="topbar">
     <div class="topbar-left">
       <h1 id="page-title">Dashboard</h1>
-      <p id="page-sub">Επισκόπηση βαρδιών — Gaia Garden</p>
+      <p id="page-sub">Επισκόπηση βαρδιών — Gaia Garden <span class="db-tag">🟢 Supabase Live</span></p>
     </div>
     <div class="topbar-right">
       <div class="day-badge" id="today-day"></div>
       <div class="clock-badge" id="main-clock">00:00</div>
     </div>
   </div>
+
   <div class="content">
     <div class="view active" id="view-dashboard">
       <div class="stats-row">
-        <div class="stat-card success-card"><div class="stat-icon">✅</div><div class="stat-val">18</div><div class="stat-label">Δήλωσαν βάρδια</div></div>
-        <div class="stat-card alert-card"><div class="stat-icon">⚠️</div><div class="stat-val">3</div><div class="stat-label">Δεν δήλωσαν</div></div>
-        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val">22</div><div class="stat-label">Σύνολο εργαζομένων</div></div>
-        <div class="stat-card"><div class="stat-icon">📱</div><div class="stat-val">3</div><div class="stat-label">SMS σήμερα</div></div>
+        <div class="stat-card success-card"><div class="stat-icon">✅</div><div class="stat-val" id="stat-ok">–</div><div class="stat-label">Δήλωσαν βάρδια</div></div>
+        <div class="stat-card alert-card"><div class="stat-icon">⚠️</div><div class="stat-val" id="stat-missing">–</div><div class="stat-label">Δεν δήλωσαν</div></div>
+        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="stat-total">–</div><div class="stat-label">Σύνολο εργαζομένων</div></div>
+        <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-val" id="stat-depts">–</div><div class="stat-label">Τμήματα</div></div>
       </div>
       <div class="section">
         <div class="section-header">
-          <div><div class="section-title">⚠️ Ενεργές Ειδοποιήσεις</div><div class="section-sub">SMS στάλθηκε αυτόματα στον Μάστερ</div></div>
-          <button class="btn-small btn-alert" onclick="simulateSMS()">📱 Στείλε τώρα</button>
-        </div>
-        <div class="alerts-list">
-          <div class="alert-row"><div class="alert-icon">🔴</div><div class="alert-info"><div class="alert-name">HALATA YEVHEN</div><div class="alert-detail">Συντήρηση • 07:00–15:30 • Δεν δήλωσε έναρξη</div><div class="alert-time">Καθυστέρηση: 45 λεπτά</div></div><div class="sms-badge">✓ SMS εστάλη</div></div>
-          <div class="alert-row"><div class="alert-icon">🔴</div><div class="alert-info"><div class="alert-name">GOXHAJ LORENC</div><div class="alert-detail">Υποδοχή • 23:00–07:30 • Δεν δήλωσε λήξη</div><div class="alert-time">Καθυστέρηση: 30 λεπτά</div></div><div class="sms-badge">✓ SMS εστάλη</div></div>
-          <div class="alert-row"><div class="alert-icon">🟡</div><div class="alert-info"><div class="alert-name">LEIGH RACHEL-ELIZABETH</div><div class="alert-detail">Μπαρ • 21:00–01:20 • Εκκρεμεί δήλωση</div><div class="alert-time">Ελέγχεται στις 21:30</div></div><div class="sms-badge" style="color:var(--warning)">⏳ Αναμονή</div></div>
-        </div>
-      </div>
-      <div class="section">
-        <div class="section-header">
-          <div><div class="section-title">📋 Τμήματα & Βάρδιες</div><div class="section-sub">🟢 Δήλωσε 🔴 Δεν δήλωσε</div></div>
+          <div><div class="section-title">📋 Τμήματα & Βάρδιες</div><div class="section-sub">🟢 Δήλωσε &nbsp;🔴 Δεν δήλωσε</div></div>
           <button class="btn-small" onclick="openAddModal()">+ Προσθήκη</button>
         </div>
-        <div class="dept-grid" id="dept-grid"></div>
+        <div class="dept-grid" id="dept-grid">
+          <div class="loading" style="grid-column:1/-1"><span class="spinner"></span>Φόρτωση από Supabase...</div>
+        </div>
       </div>
     </div>
+
     <div class="view" id="view-employees">
       <div class="section-header" style="margin-bottom:20px">
-        <div><div class="section-title">👥 Όλοι οι Εργαζόμενοι</div><div class="section-sub">22 εργαζόμενοι — 7 τμήματα</div></div>
+        <div><div class="section-title">👥 Όλοι οι Εργαζόμενοι</div><div class="section-sub" id="emp-subtitle">Φόρτωση...</div></div>
         <button class="btn-small" onclick="openAddModal()">+ Νέος</button>
       </div>
-      <div id="emp-list-full"></div>
+      <div id="emp-list-full"><div class="loading"><span class="spinner"></span>Φόρτωση...</div></div>
     </div>
+
     <div class="view" id="view-schedule">
       <div class="section-title" style="margin-bottom:20px">📅 Εβδομαδιαίο Πρόγραμμα</div>
       <div id="schedule-grid"></div>
     </div>
+
     <div class="view" id="view-alerts">
-      <div class="section-title" style="margin-bottom:20px">📱 Ιστορικό Ειδοποιήσεων</div>
-      <div id="alerts-history"></div>
+      <div class="section-title" style="margin-bottom:20px">📱 Ειδοποιήσεις</div>
+      <div id="alerts-view"></div>
     </div>
   </div>
 </div>
+
 <div class="sms-toast" id="sms-toast">
   <div class="toast-header">
     <div class="toast-app">💬</div>
-    <div><div class="toast-sender">ShiftKos</div><div class="toast-app-name">SMS • τώρα</div></div>
+    <div><div class="toast-sender">ShiftKos</div><div class="toast-app-name">WhatsApp • τώρα</div></div>
     <div class="toast-time" id="toast-time"></div>
   </div>
   <div class="toast-body" id="toast-body"></div>
 </div>
+
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <h3>Νέος Εργαζόμενος</h3>
-    <p>Προσθήκη στο Gaia Garden</p>
+    <p>Αποθήκευση απευθείας στο Supabase</p>
     <div class="modal-field"><label>ΟΝΟΜΑ ΕΠΩΝΥΜΟ</label><input type="text" placeholder="π.χ. ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΙΩΡΓΟΣ" id="new-name"></div>
-    <div class="modal-field"><label>ΤΜΗΜΑ</label><select id="new-dept"><option>Εστιατόριο</option><option>Μπαρ</option><option>Κουζίνα</option><option>Υποδοχή</option><option>Οροφοκομία</option><option>Συντήρηση</option><option>Κήπος</option></select></div>
-    <div class="modal-field"><label>ΒΑΡΔΙΑ</label><select id="new-shift"><option>07:00–15:30</option><option>09:00–17:30</option><option>15:00–23:30</option><option>17:00–01:20</option><option>21:00–01:20</option><option>23:00–07:30</option></select></div>
+    <div class="modal-field"><label>ΤΜΗΜΑ</label>
+      <select id="new-dept">
+        <option>Εστιατόριο</option><option>Μπαρ</option><option>Κουζίνα</option>
+        <option>Υποδοχή</option><option>Οροφοκομία</option><option>Συντήρηση</option><option>Κήπος</option>
+      </select>
+    </div>
+    <div class="modal-field"><label>ΩΡΑ ΕΝΑΡΞΗΣ</label>
+      <select id="new-start">
+        <option value="07:00">07:00</option><option value="09:00">09:00</option>
+        <option value="15:00">15:00</option><option value="17:00">17:00</option>
+        <option value="21:00">21:00</option><option value="23:00">23:00</option>
+      </select>
+    </div>
+    <div class="modal-field"><label>ΩΡΑ ΛΗΞΗΣ</label>
+      <select id="new-end">
+        <option value="15:30">15:30</option><option value="17:30">17:30</option>
+        <option value="23:30">23:30</option><option value="01:20">01:20</option>
+        <option value="07:30">07:30</option>
+      </select>
+    </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Άκυρο</button>
-      <button class="btn-save" onclick="addEmployee()">Αποθήκευση</button>
+      <button class="btn-save" id="save-btn" onclick="addEmployee()">💾 Αποθήκευση</button>
     </div>
   </div>
-</div><script>const SUPABASE_URL = 'https://yohhvfykdlzcrnnorhke.supabase.co';
+</div>
+
+<script>
+const SUPABASE_URL = 'https://yohhvfykdlzcrnnorhke.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_s0Q12lYyridNT8Yos-7qVQ_z_3ACT95';
-const departments = {
-  'Εστιατόριο': { icon: '🍽️', employees: [
-    { name: 'FETAU SHYQYRI', shift: '07:00–15:30', status: 'ok' },
-    { name: 'HALATA NATALIA', shift: '07:00–15:30', status: 'ok' },
-    { name: 'KAMPERI SILVANA', shift: '07:00–15:30', status: 'ok' },
-    { name: 'MORRETO ΑΡΓΥΡΩ Τ.', shift: '07:00–15:30', status: 'ok' },
-  ]},
-  'Συντήρηση': { icon: '🔧', employees: [
-    { name: 'HALATA YEVHEN', shift: '07:00–15:30', status: 'missing' },
-  ]},
-  'Μπαρ': { icon: '🍹', employees: [
-    { name: 'NOWICKI KATRIN', shift: '09:00–17:30', status: 'ok' },
-    { name: 'ΚΡΗΤΙΚΟΣ ΕΥΣΤΑΘΙΟΣ', shift: '09:00–17:30', status: 'ok' },
-    { name: 'ΚΡΗΤΙΚΟΣ ΣΩΤΗΡΙΟΣ', shift: '17:00–01:20', status: 'ok' },
-    { name: 'COBANI ELSON', shift: '17:00–01:20', status: 'ok' },
-    { name: 'LEIGH RACHEL-E.', shift: '21:00–01:20', status: 'missing' },
-  ]},
-  'Οροφοκομία': { icon: '🛏️', employees: [
-    { name: 'DOVREVA IVANKA', shift: '07:00–15:30', status: 'ok' },
-    { name: 'HARJANA FROSINA', shift: '07:00–15:30', status: 'ok' },
-    { name: 'KOLVANI ALMA', shift: '07:00–15:30', status: 'ok' },
-    { name: 'QAZIMLLARI BLERTA', shift: '07:00–15:30', status: 'ok' },
-    { name: 'QORRI BRUNILDA', shift: '07:00–15:30', status: 'ok' },
-    { name: 'SHKAKU NERTILA', shift: '07:00–15:30', status: 'ok' },
-  ]},
-  'Υποδοχή': { icon: '🏨', employees: [
-    { name: 'GOXHAJ LORENC', shift: '23:00–07:30', status: 'missing' },
-    { name: 'ΒΟΥΚΕΛΑΤΟΥ Σ.Ε.', shift: '09:00–17:30', status: 'ok' },
-    { name: 'ΛΑΖΑΡΙΔΗ ΚΩΝΣΤΑΝΤΙΝΑ', shift: '09:00–17:30', status: 'ok' },
-    { name: 'ΞΕΝΙΚΑΣ ΒΑΣΙΛΗΣ', shift: '09:00–17:30', status: 'ok' },
-    { name: 'ΦΕΙΖΟ ΜΙΓΚΕΛΑ', shift: '15:00–23:30', status: 'ok' },
-  ]},
-  'Κήπος': { icon: '🌿', employees: [
-    { name: 'ΘΟΔΩΡΑΚΗΣ ΜΑΡΚΟ', shift: '07:00–15:30', status: 'ok' },
-  ]},
-  'Κουζίνα': { icon: '👨‍🍳', employees: [
-    { name: 'SPAHO XHOI', shift: '07:00–15:30', status: 'ok' },
-    { name: 'ΠΟΛΥΓΕΝΗΣ ΒΑΣΙΛΕΙΟΣ', shift: '07:00–15:30', status: 'ok' },
-    { name: 'BOCI VASIL', shift: '07:00–15:30', status: 'ok' },
-  ]}
-};
-const smsMessages = [
-  'HALATA YEVHEN (Συντήρηση) δεν δήλωσε έναρξη βάρδιας 07:00. — ShiftKos',
-  'GOXHAJ LORENC (Υποδοχή) δεν δήλωσε λήξη βάρδιας 07:30. — ShiftKos',
-  'LEIGH RACHEL-ELIZABETH (Μπαρ) δεν δήλωσε έναρξη 21:00. — ShiftKos',
-];
-let smsIndex = 0;
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const ICONS = {'Εστιατόριο':'🍽️','Μπαρ':'🍹','Κουζίνα':'👨‍🍳','Υποδοχή':'🏨','Οροφοκομία':'🛏️','Συντήρηση':'🔧','Κήπος':'🌿'};
+
+let employees = [];
+
 function updateClock() {
   const now = new Date();
-  document.getElementById('main-clock').textContent = now.toLocaleTimeString('el-GR', {hour:'2-digit', minute:'2-digit'});
-  document.getElementById('today-day').textContent = now.toLocaleDateString('el-GR', {weekday:'long', day:'numeric', month:'long'});
+  document.getElementById('main-clock').textContent = now.toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('today-day').textContent = now.toLocaleDateString('el-GR',{weekday:'long',day:'numeric',month:'long'});
 }
 setInterval(updateClock, 1000); updateClock();
+
+async function loadEmployees() {
+  const { data, error } = await sb.from('employees').select('*').order('department').order('name');
+  if (error) {
+    document.getElementById('dept-grid').innerHTML = `<div class="loading" style="color:var(--alert);grid-column:1/-1">❌ Σφάλμα: ${error.message}</div>`;
+    return;
+  }
+  employees = data.map(e => ({...e, status: e.status || 'ok'}));
+  updateStats();
+  renderDepts();
+}
+
+function groupByDept() {
+  return employees.reduce((g, e) => { (g[e.department] = g[e.department]||[]).push(e); return g; }, {});
+}
+
+function updateStats() {
+  const total = employees.length;
+  const missing = employees.filter(e => e.status === 'missing').length;
+  const depts = Object.keys(groupByDept()).length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-ok').textContent = total - missing;
+  document.getElementById('stat-missing').textContent = missing;
+  document.getElementById('stat-depts').textContent = depts;
+  document.getElementById('alert-badge').textContent = missing;
+  document.getElementById('emp-subtitle').textContent = `${total} εργαζόμενοι — ${depts} τμήματα`;
+}
+
 function renderDepts() {
   const grid = document.getElementById('dept-grid');
+  const grouped = groupByDept();
   grid.innerHTML = '';
-  Object.entries(departments).forEach(([deptName, dept]) => {
+  Object.entries(grouped).forEach(([dept, emps]) => {
+    const icon = ICONS[dept] || '🏢';
     const card = document.createElement('div');
     card.className = 'dept-card';
-    card.innerHTML = `<div class="dept-header"><div class="dept-name">${dept.icon} ${deptName}</div><span class="dept-count">${dept.employees.length} άτομα</span></div><div class="dept-body">${dept.employees.map(emp => `<div class="emp-row"><div class="emp-info"><div class="emp-name">${emp.name}</div><div class="emp-shift">🕐 ${emp.shift}</div></div><div class="emp-status ${emp.status}" onclick="toggleStatus('${deptName}','${emp.name}')">${emp.status==='ok'?'✓':'!'}</div></div>`).join('')}</div>`;
+    card.innerHTML = `
+      <div class="dept-header">
+        <div class="dept-name">${icon} ${dept}</div>
+        <span class="dept-count">${emps.length} άτομα</span>
+      </div>
+      <div class="dept-body">
+        ${emps.map(emp => `
+          <div class="emp-row">
+            <div class="emp-info">
+              <div class="emp-name">${emp.name}</div>
+              <div class="emp-shift">🕐 ${emp.shift_start}–${emp.shift_end}</div>
+            </div>
+            <div class="emp-status ${emp.status}" onclick="toggleStatus(${emp.id})">${emp.status==='ok'?'✓':'!'}</div>
+          </div>`).join('')}
+      </div>`;
     grid.appendChild(card);
   });
 }
-function toggleStatus(d, n) {
-  const emp = departments[d].employees.find(e => e.name === n);
-  if (emp) { emp.status = emp.status === 'ok' ? 'missing' : 'ok'; renderDepts(); renderEmployeesFull(); }
+
+function toggleStatus(id) {
+  const emp = employees.find(e => e.id === id);
+  if (!emp) return;
+  emp.status = emp.status === 'ok' ? 'missing' : 'ok';
+  updateStats(); renderDepts(); renderEmployeesFull();
 }
+
 function renderEmployeesFull() {
   const list = document.getElementById('emp-list-full');
+  const grouped = groupByDept();
   list.innerHTML = '';
-  Object.entries(departments).forEach(([deptName, dept]) => {
+  Object.entries(grouped).forEach(([dept, emps]) => {
+    const icon = ICONS[dept] || '🏢';
     const s = document.createElement('div');
     s.style.marginBottom = '20px';
-    s.innerHTML = `<div style="font-size:13px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">${dept.icon} ${deptName}</div><div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden">${dept.employees.map((emp,i) => `<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;${i<dept.employees.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':''}"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">${emp.name.charAt(0)}</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">${emp.name}</div><div style="font-size:12px;color:var(--text-muted)">🕐 ${emp.shift}</div></div><div class="emp-status ${emp.status}" onclick="toggleStatus('${deptName}','${emp.name}')">${emp.status==='ok'?'✓':'!'}</div></div>`).join('')}</div>`;
+    s.innerHTML = `
+      <div style="font-size:13px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">${icon} ${dept}</div>
+      <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden">
+        ${emps.map((emp,i) => `
+          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;${i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':''}">
+            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">${emp.name.charAt(0)}</div>
+            <div style="flex:1">
+              <div style="font-size:14px;color:var(--cream)">${emp.name}</div>
+              <div style="font-size:12px;color:var(--text-muted)">🕐 ${emp.shift_start}–${emp.shift_end}</div>
+            </div>
+            <div class="emp-status ${emp.status}" onclick="toggleStatus(${emp.id})">${emp.status==='ok'?'✓':'!'}</div>
+          </div>`).join('')}
+      </div>`;
     list.appendChild(s);
   });
 }
+
 function renderSchedule() {
   const days = ['Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή'];
-  document.getElementById('schedule-grid').innerHTML = `<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr><th style="text-align:left;padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">Εργαζόμενος</th>${days.map(d=>`<th style="padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">${d}</th>`).join('')}</tr></thead><tbody>${Object.entries(departments).flatMap(([dn,dept])=>dept.employees.map(emp=>`<tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:10px 14px"><div style="color:var(--cream)">${emp.name}</div><div style="font-size:11px;color:var(--text-muted)">${dn}</div></td>${days.map(()=>`<td style="padding:10px 14px;text-align:center"><div style="background:rgba(76,175,125,0.12);border:1px solid rgba(76,175,125,0.25);border-radius:6px;padding:4px 8px;font-size:11px;color:#7ddba9">${emp.shift}</div></td>`).join('')}</tr>`)).join('')}</tbody></table></div>`;
+  document.getElementById('schedule-grid').innerHTML = `
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr>
+          <th style="text-align:left;padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">Εργαζόμενος</th>
+          ${days.map(d=>`<th style="padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">${d}</th>`).join('')}
+        </tr></thead>
+        <tbody>${employees.map(emp=>`
+          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)">
+            <td style="padding:10px 14px"><div style="color:var(--cream)">${emp.name}</div><div style="font-size:11px;color:var(--text-muted)">${emp.department}</div></td>
+            ${days.map(()=>`<td style="padding:10px 14px;text-align:center"><div style="background:rgba(76,175,125,0.12);border:1px solid rgba(76,175,125,0.25);border-radius:6px;padding:4px 8px;font-size:11px;color:#7ddba9">${emp.shift_start}–${emp.shift_end}</div></td>`).join('')}
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
 }
-function renderAlertsHistory() {
-  const alerts = [{time:'07:45',name:'HALATA YEVHEN',dept:'Συντήρηση',type:'Δεν δήλωσε έναρξη'},{time:'07:32',name:'GOXHAJ LORENC',dept:'Υποδοχή',type:'Δεν δήλωσε λήξη'},{time:'06:15',name:'ΦΕΙΖΟ ΜΙΓΚΕΛΑ',dept:'Υποδοχή',type:'Δεν δήλωσε έναρξη'},{time:'Χθες 22:10',name:'COBANI ELSON',dept:'Μπαρ',type:'Δεν δήλωσε έναρξη'}];
-  document.getElementById('alerts-history').innerHTML = `<div style="display:flex;flex-direction:column;gap:10px">${alerts.map(a=>`<div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:11px;color:var(--text-muted);min-width:70px">${a.time}</div><div style="flex:1"><div style="color:var(--cream)">${a.name}</div><div style="font-size:12px;color:var(--text-muted)">${a.dept} • ${a.type}</div></div><div class="sms-badge">✓ SMS εστάλη</div></div>`).join('')}</div>`;
+
+function renderAlerts() {
+  const missing = employees.filter(e => e.status === 'missing');
+  const el = document.getElementById('alerts-view');
+  if (!missing.length) { el.innerHTML = `<div class="loading">✅ Δεν υπάρχουν εκκρεμείς ειδοποιήσεις</div>`; return; }
+  el.innerHTML = `<div style="display:flex;flex-direction:column;gap:10px">${missing.map(emp=>`
+    <div style="background:rgba(224,92,75,0.06);border:1px solid rgba(224,92,75,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px">
+      <div style="font-size:20px">🔴</div>
+      <div style="flex:1"><div style="color:var(--cream)">${emp.name}</div><div style="font-size:12px;color:var(--text-muted)">${emp.department} • ${emp.shift_start}–${emp.shift_end} • Δεν δήλωσε</div></div>
+      <div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div>
+    </div>`).join('')}
+  </div>`;
 }
+
 function setNav(el, view) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   el.classList.add('active');
@@ -297,38 +360,54 @@ function setNav(el, view) {
   document.getElementById('page-title').textContent = titles[view];
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
-  if (view==='alerts') renderAlertsHistory();
+  if (view==='alerts') renderAlerts();
 }
-function simulateSMS() {
- 
-  const img = new Image();
-  img.src = 'https://shiftkos-whatsapp-3139.twil.io/welcome';
-  const now = new Date().toLocaleTimeString('el-GR', {hour:'2-digit',minute:'2-digit'});
+
+function showToast(msg) {
+  const now = new Date().toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('toast-time').textContent = now;
-  document.getElementById('toast-body').innerHTML = `<strong>⚠️ GAIA GARDEN:</strong> WhatsApp εστάλη στον Μάστερ!`;
-  const toast = document.getElementById('sms-toast');
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 5000);
+  document.getElementById('toast-body').innerHTML = msg;
+  const t = document.getElementById('sms-toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 4000);
 }
- 
-  
+
+function simulateSMS() {
+  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome').catch(()=>{});
+  showToast(`<strong>⚠️ GAIA GARDEN:</strong> WhatsApp εστάλη στον Μάστερ!`);
+}
+
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
-function addEmployee() {
+
+async function addEmployee() {
   const name = document.getElementById('new-name').value.trim().toUpperCase();
   const dept = document.getElementById('new-dept').value;
-  const shift = document.getElementById('new-shift').value;
-  if (!name) return;
-  departments[dept].employees.push({name, shift, status:'ok'});
-  renderDepts(); closeModal();
+  const start = document.getElementById('new-start').value;
+  const end = document.getElementById('new-end').value;
+  if (!name) { alert('Βάλε όνομα!'); return; }
+
+  const btn = document.getElementById('save-btn');
+  btn.textContent = '⏳ Αποθήκευση...';
+  btn.disabled = true;
+
+  const { data, error } = await sb.from('employees').insert([{
+    name, department: dept, shift_start: start, shift_end: end
+  }]).select();
+
+  btn.textContent = '💾 Αποθήκευση';
+  btn.disabled = false;
+
+  if (error) { alert('❌ ' + error.message); return; }
+
+  employees.push({...data[0], status: 'ok'});
+  employees.sort((a,b) => a.department.localeCompare(b.department) || a.name.localeCompare(b.name));
+  updateStats(); renderDepts(); closeModal();
   document.getElementById('new-name').value = '';
+  showToast(`✅ <strong>${name}</strong> προστέθηκε στο Supabase!`);
 }
-renderDepts();
+
+loadEmployees();
 </script>
 </body>
-</html><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#c9a84c">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="ShiftKos">
-
+</html>
