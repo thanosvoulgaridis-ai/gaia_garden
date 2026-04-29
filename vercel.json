@@ -1,5 +1,11 @@
 {
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "crons": [
+    {
+      "path": "/api/check-shifts",
+      "schedule": "*/10 * * * *"
+    }
   ]
 }
