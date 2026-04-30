@@ -239,7 +239,7 @@ async function loadEmployees() {
     document.getElementById('dept-grid').innerHTML = `<div class="loading" style="color:var(--alert);grid-column:1/-1">❌ Σφάλμα: ${error.message}</div>`;
     return;
   }
-  employees = data.map(e => ({...e, status: e.status || 'missing'}));
+  employees = data.map(e => ({...e, status: e.status === 'ok' ? 'ok' : 'missing'}));
   updateStats();
   renderDepts();
 }
