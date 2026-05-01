@@ -445,6 +445,43 @@ async function addEmployee() {
 setInterval(function() {
   if (currentHotel) loadEmployees();
 }, 30000);
+
+// Έλεγχος βαρδιών κάθε 10 λεπτά
+setInterval(function() {
+  if (currentHotel) checkShifts();
+}, 600000);
+
+async function checkShifts() {
+  const now = new Date();
+  const currentTime = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  
+  employees.forEach(function(emp) {
+    const startPlus10 = addMinutes(emp.shift_start, 10);
+    const endPlus10 = addMinutes(emp.shift_end, 10);
+    
+    if (currentTime === startPlus10 && emp.status === 'missing') {
+      sendAlert(emp.name, emp.department, emp.shift_start, 'έναρξη');
+    }
+    if (currentTime === endPlus10 && emp.status === 'ok') {
+      sendAlert(emp.name, emp.department, emp.shift_end, 'λήξη');
+    }
+  });
+}
+
+function addMinutes(time, mins) {
+  const parts = time.split(':');
+  const h = parseInt(parts[0]);
+  const m = parseInt(parts[1]);
+  const total = h * 60 + m + mins;
+  const newH = Math.floor(total / 60) % 24;
+  const newM = total % 60;
+  return newH.toString().padStart(2,'0') + ':' + newM.toString().padStart(2,'0');
+}
+
+function sendAlert(name, dept, time, type) {
+  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome?msg=' + encodeURIComponent(name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '. — ShiftKos'));
+  showToast('⚠️ <strong>' + name + '</strong> δεν δήλωσε ' + type + '!');
+}
 </script>
 </body>
 </html>
