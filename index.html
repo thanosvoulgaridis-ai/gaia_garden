@@ -15,6 +15,24 @@
     --warning: #f0a500; --text-muted: #8899aa; --sidebar-w: 240px;
   }
   body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; display: flex; overflow: hidden; }
+
+  /* LOGIN */
+  .login-screen { position: fixed; inset: 0; background: var(--navy); display: flex; align-items: center; justify-content: center; z-index: 999; }
+  .login-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.2); border-radius: 24px; padding: 48px; width: 400px; }
+  .login-logo { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--gold); text-align: center; margin-bottom: 4px; }
+  .login-logo span { color: var(--white); }
+  .login-sub { font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 40px; }
+  .login-field { margin-bottom: 16px; }
+  .login-field label { display: block; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .login-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 16px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border 0.2s; }
+  .login-field input:focus { border-color: rgba(201,168,76,0.4); }
+  .login-btn { width: 100%; background: linear-gradient(135deg, var(--gold), #8a6020); border: none; border-radius: 10px; padding: 14px; color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 24px; transition: all 0.2s; }
+  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+  .login-error { color: var(--alert); font-size: 13px; text-align: center; margin-top: 16px; display: none; }
+
+  /* DASHBOARD */
+  .dashboard { display: none; width: 100%; }
+  .dashboard.show { display: flex; }
   .sidebar { width: var(--sidebar-w); background: rgba(7,15,30,0.95); border-right: 1px solid rgba(201,168,76,0.1); display: flex; flex-direction: column; padding: 28px 0; flex-shrink: 0; z-index: 10; }
   .sidebar-logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
   .sidebar-logo .logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--gold); }
@@ -34,6 +52,7 @@
   .master-status { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 11px; color: var(--success); }
   .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .logout-btn { width: 100%; margin-top: 12px; background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.2); border-radius: 8px; padding: 8px; color: var(--alert); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
   .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
   .topbar { background: rgba(7,15,30,0.8); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 5; }
   .topbar-left h1 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--cream); }
@@ -43,7 +62,7 @@
   .day-badge { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 14px; font-size: 12px; color: var(--text-muted); }
   .content { padding: 28px 32px; }
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-  .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; transition: all 0.3s; }
+  .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; }
   .stat-icon { font-size: 22px; margin-bottom: 12px; }
   .stat-val { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--cream); }
   .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
@@ -67,15 +86,15 @@
   .emp-info { flex: 1; min-width: 0; }
   .emp-name { font-size: 13px; color: var(--cream); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .emp-shift { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-  .emp-status { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; cursor: pointer; transition: all 0.2s; }
-  .emp-status.ok { background: rgba(76,175,125,0.15); border: 1px solid rgba(76,175,125,0.3); }
-  .emp-status.missing { background: rgba(224,92,75,0.15); border: 1px solid rgba(224,92,75,0.3); }
+  .emp-status { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+  .emp-status.ok { background: rgba(76,175,125,0.15); border: 1px solid rgba(76,175,125,0.3); color: var(--success); }
+  .emp-status.missing { background: rgba(224,92,75,0.15); border: 1px solid rgba(224,92,75,0.3); color: var(--alert); }
+  .emp-status.done { background: rgba(136,153,170,0.15); border: 1px solid rgba(136,153,170,0.3); color: var(--text-muted); }
   .sms-toast { position: fixed; bottom: 24px; right: 24px; width: 340px; background: #111827; border-radius: 18px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); z-index: 100; transform: translateY(120px); opacity: 0; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.08); }
   .sms-toast.show { transform: translateY(0); opacity: 1; }
   .toast-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .toast-app { width: 34px; height: 34px; background: #25D366; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
   .toast-sender { font-size: 13px; font-weight: 600; }
-  .toast-app-name { font-size: 11px; color: rgba(255,255,255,0.4); }
   .toast-time { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.3); }
   .toast-body { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 12px; }
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -91,104 +110,126 @@
   .btn-save { background: linear-gradient(135deg, var(--gold), #8a6020); border: none; border-radius: 10px; padding: 10px 24px; color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
   .view { display: none; }
   .view.active { display: block; }
-  .loading { text-align: center; padding: 40px; color: var(--text-muted); font-size: 14px; }
-  .spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid rgba(201,168,76,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
-  @keyframes spin { to { transform: rotate(360deg); } }
   .db-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; background: rgba(76,175,125,0.12); border: 1px solid rgba(76,175,125,0.25); border-radius: 6px; padding: 2px 8px; color: var(--success); margin-left: 8px; vertical-align: middle; }
+  .loading { text-align: center; padding: 40px; color: var(--text-muted); }
 </style>
 </head>
 <body>
 
-<div class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-text">Shift<span>Kos</span></div>
-    <div class="hotel-name">🏨 Gaia Garden Hotel</div>
+<!-- LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Shift<span>Kos</span></div>
+    <div class="login-sub">Σύστημα Διαχείρισης Βαρδιών</div>
+    <div class="login-field">
+      <label>USERNAME</label>
+      <input type="text" id="login-username" placeholder="π.χ. gaiagarden">
+    </div>
+    <div class="login-field">
+      <label>PASSWORD</label>
+      <input type="password" id="login-password" placeholder="••••••••">
+    </div>
+    <button class="login-btn" onclick="doLogin()">🔐 Σύνδεση</button>
+    <div class="login-error" id="login-error">❌ Λάθος username ή password!</div>
   </div>
-  <div class="nav-section">
-    <div class="nav-label">Κύριο Μενού</div>
-    <div class="nav-item active" onclick="setNav(this,'dashboard')"><span class="icon">📊</span> Dashboard</div>
-    <div class="nav-item" onclick="setNav(this,'employees')"><span class="icon">👥</span> Εργαζόμενοι</div>
-    <div class="nav-item" onclick="setNav(this,'schedule')"><span class="icon">📅</span> Πρόγραμμα</div>
-    <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις <span class="nav-badge" id="alert-badge">0</span></div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">Shift<span>Kos</span></div>
+      <div class="hotel-name" id="hotel-name-display">🏨 Gaia Garden Hotel</div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Κύριο Μενού</div>
+      <div class="nav-item active" onclick="setNav(this,'dashboard')"><span class="icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="setNav(this,'employees')"><span class="icon">👥</span> Εργαζόμενοι</div>
+      <div class="nav-item" onclick="setNav(this,'schedule')"><span class="icon">📅</span> Πρόγραμμα</div>
+      <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις <span class="nav-badge" id="alert-badge">0</span></div>
+    </div>
+    <div class="nav-section" style="margin-top:12px">
+      <div class="nav-label">Σύστημα</div>
+      <div class="nav-item" onclick="simulateSMS()"><span class="icon">📱</span> Test WhatsApp</div>
+      <div class="nav-item"><span class="icon">⚙️</span> Ρυθμίσεις</div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="master-card">
+        <div class="master-label">Υπεύθυνος</div>
+        <div class="master-name">👑 Μάστερ</div>
+        <div class="master-status"><div class="status-dot"></div> Λαμβάνει ειδοποιήσεις</div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">🚪 Αποσύνδεση</button>
+    </div>
   </div>
-  <div class="nav-section" style="margin-top:12px">
-    <div class="nav-label">Σύστημα</div>
-    <div class="nav-item" onclick="simulateSMS()"><span class="icon">📱</span> Test WhatsApp</div>
-    <div class="nav-item"><span class="icon">⚙️</span> Ρυθμίσεις</div>
-  </div>
-  <div class="sidebar-footer">
-    <div class="master-card">
-      <div class="master-label">Υπεύθυνος</div>
-      <div class="master-name">👑 Μάστερ</div>
-      <div class="master-status"><div class="status-dot"></div> Λαμβάνει ειδοποιήσεις</div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <h1 id="page-title">Dashboard</h1>
+        <p id="page-sub">Επισκόπηση βαρδιών <span class="db-tag">🟢 Supabase Live</span></p>
+      </div>
+      <div class="topbar-right">
+        <div class="day-badge" id="today-day"></div>
+        <div class="clock-badge" id="main-clock">00:00</div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="view active" id="view-dashboard">
+        <div class="stats-row">
+          <div class="stat-card success-card"><div class="stat-icon">✅</div><div class="stat-val" id="stat-ok">–</div><div class="stat-label">Δήλωσαν βάρδια</div></div>
+          <div class="stat-card alert-card"><div class="stat-icon">⚠️</div><div class="stat-val" id="stat-missing">–</div><div class="stat-label">Δεν δήλωσαν</div></div>
+          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="stat-total">–</div><div class="stat-label">Σύνολο εργαζομένων</div></div>
+          <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-val" id="stat-depts">–</div><div class="stat-label">Τμήματα</div></div>
+        </div>
+        <div class="section">
+          <div class="section-header">
+            <div><div class="section-title">📋 Τμήματα & Βάρδιες</div><div class="section-sub">🟢 Δήλωσε &nbsp;🔴 Δεν δήλωσε</div></div>
+            <button class="btn-small" onclick="openAddModal()">+ Προσθήκη</button>
+          </div>
+          <div class="dept-grid" id="dept-grid">
+            <div class="loading">Φόρτωση...</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view" id="view-employees">
+        <div class="section-header" style="margin-bottom:20px">
+          <div><div class="section-title">👥 Όλοι οι Εργαζόμενοι</div><div class="section-sub" id="emp-subtitle">Φόρτωση...</div></div>
+          <button class="btn-small" onclick="openAddModal()">+ Νέος</button>
+        </div>
+        <div id="emp-list-full"></div>
+      </div>
+
+      <div class="view" id="view-schedule">
+        <div class="section-title" style="margin-bottom:20px">📅 Εβδομαδιαίο Πρόγραμμα</div>
+        <div id="schedule-grid"></div>
+      </div>
+
+      <div class="view" id="view-alerts">
+        <div class="section-title" style="margin-bottom:20px">📱 Ειδοποιήσεις</div>
+        <div id="alerts-view"></div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h1 id="page-title">Dashboard</h1>
-      <p id="page-sub">Επισκόπηση βαρδιών — Gaia Garden <span class="db-tag">🟢 Supabase Live</span></p>
-    </div>
-    <div class="topbar-right">
-      <div class="day-badge" id="today-day"></div>
-      <div class="clock-badge" id="main-clock">00:00</div>
-    </div>
-  </div>
-
-  <div class="content">
-    <div class="view active" id="view-dashboard">
-      <div class="stats-row">
-        <div class="stat-card success-card"><div class="stat-icon">✅</div><div class="stat-val" id="stat-ok">–</div><div class="stat-label">Δήλωσαν βάρδια</div></div>
-        <div class="stat-card alert-card"><div class="stat-icon">⚠️</div><div class="stat-val" id="stat-missing">–</div><div class="stat-label">Δεν δήλωσαν</div></div>
-        <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="stat-total">–</div><div class="stat-label">Σύνολο εργαζομένων</div></div>
-        <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-val" id="stat-depts">–</div><div class="stat-label">Τμήματα</div></div>
-      </div>
-      <div class="section">
-        <div class="section-header">
-          <div><div class="section-title">📋 Τμήματα & Βάρδιες</div><div class="section-sub">🟢 Δήλωσε &nbsp;🔴 Δεν δήλωσε</div></div>
-          <button class="btn-small" onclick="openAddModal()">+ Προσθήκη</button>
-        </div>
-        <div class="dept-grid" id="dept-grid">
-          <div class="loading" style="grid-column:1/-1"><span class="spinner"></span>Φόρτωση από Supabase...</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="view" id="view-employees">
-      <div class="section-header" style="margin-bottom:20px">
-        <div><div class="section-title">👥 Όλοι οι Εργαζόμενοι</div><div class="section-sub" id="emp-subtitle">Φόρτωση...</div></div>
-        <button class="btn-small" onclick="openAddModal()">+ Νέος</button>
-      </div>
-      <div id="emp-list-full"><div class="loading"><span class="spinner"></span>Φόρτωση...</div></div>
-    </div>
-
-    <div class="view" id="view-schedule">
-      <div class="section-title" style="margin-bottom:20px">📅 Εβδομαδιαίο Πρόγραμμα</div>
-      <div id="schedule-grid"></div>
-    </div>
-
-    <div class="view" id="view-alerts">
-      <div class="section-title" style="margin-bottom:20px">📱 Ειδοποιήσεις</div>
-      <div id="alerts-view"></div>
-    </div>
-  </div>
-</div>
-
+<!-- TOAST -->
 <div class="sms-toast" id="sms-toast">
   <div class="toast-header">
     <div class="toast-app">💬</div>
-    <div><div class="toast-sender">ShiftKos</div><div class="toast-app-name">WhatsApp • τώρα</div></div>
+    <div><div class="toast-sender">ShiftKos</div></div>
     <div class="toast-time" id="toast-time"></div>
   </div>
   <div class="toast-body" id="toast-body"></div>
 </div>
 
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <h3>Νέος Εργαζόμενος</h3>
-    <p>Αποθήκευση απευθείας στο Supabase</p>
+    <p>Αποθήκευση στο Supabase</p>
     <div class="modal-field"><label>ΟΝΟΜΑ ΕΠΩΝΥΜΟ</label><input type="text" placeholder="π.χ. ΠΑΠΑΔΟΠΟΥΛΟΣ ΓΙΩΡΓΟΣ" id="new-name"></div>
     <div class="modal-field"><label>ΤΜΗΜΑ</label>
       <select id="new-dept">
@@ -225,21 +266,56 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const ICONS = {'Εστιατόριο':'🍽️','Μπαρ':'🍹','Κουζίνα':'👨‍🍳','Υποδοχή':'🏨','Οροφοκομία':'🛏️','Συντήρηση':'🔧','Κήπος':'🌿'};
 
 let employees = [];
+let currentHotel = null;
 
+// Clock
 function updateClock() {
   const now = new Date();
   document.getElementById('main-clock').textContent = now.toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('today-day').textContent = now.toLocaleDateString('el-GR',{weekday:'long',day:'numeric',month:'long'});
 }
-setInterval(updateClock, 1000); updateClock();
+setInterval(updateClock, 1000);
+updateClock();
 
-async function loadEmployees() {
-  const { data, error } = await sb.from('employees').select('*').order('department').order('name');
-  if (error) {
-    document.getElementById('dept-grid').innerHTML = `<div class="loading" style="color:var(--alert);grid-column:1/-1">❌ Σφάλμα: ${error.message}</div>`;
+// Login
+async function doLogin() {
+  const username = document.getElementById('login-username').value.trim();
+  const password = document.getElementById('login-password').value.trim();
+
+  const { data, error } = await sb.from('hotels').select('*').eq('username', username).eq('password', password).single();
+
+  if (error || !data) {
+    document.getElementById('login-error').style.display = 'block';
     return;
   }
-  employees = data.map(e => ({...e, status: e.status === 'ok' ? 'ok' : 'missing'}));
+
+  currentHotel = data;
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').classList.add('show');
+  document.getElementById('hotel-name-display').textContent = '🏨 ' + data.name;
+  loadEmployees();
+}
+
+// Enter key για login
+document.getElementById('login-password').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') doLogin();
+});
+
+function doLogout() {
+  currentHotel = null;
+  employees = [];
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('dashboard').classList.remove('show');
+  document.getElementById('login-username').value = '';
+  document.getElementById('login-password').value = '';
+  document.getElementById('login-error').style.display = 'none';
+}
+
+// Load employees
+async function loadEmployees() {
+  const { data, error } = await sb.from('employees').select('*').order('department').order('name');
+  if (error) { console.error(error); return; }
+  employees = data.map(e => ({...e, status: e.status || 'missing'}));
   updateStats();
   renderDepts();
 }
@@ -251,112 +327,70 @@ function groupByDept() {
 function updateStats() {
   const total = employees.length;
   const missing = employees.filter(e => e.status === 'missing').length;
+  const ok = employees.filter(e => e.status === 'ok').length;
   const depts = Object.keys(groupByDept()).length;
   document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-ok').textContent = total - missing;
+  document.getElementById('stat-ok').textContent = ok;
   document.getElementById('stat-missing').textContent = missing;
   document.getElementById('stat-depts').textContent = depts;
   document.getElementById('alert-badge').textContent = missing;
-  document.getElementById('emp-subtitle').textContent = `${total} εργαζόμενοι — ${depts} τμήματα`;
+  document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
 }
 
 function renderDepts() {
   const grid = document.getElementById('dept-grid');
   const grouped = groupByDept();
   grid.innerHTML = '';
-  Object.entries(grouped).forEach(([dept, emps]) => {
+  Object.entries(grouped).forEach(function([dept, emps]) {
     const icon = ICONS[dept] || '🏢';
     const card = document.createElement('div');
     card.className = 'dept-card';
-    card.innerHTML = `
-      <div class="dept-header">
-        <div class="dept-name">${icon} ${dept}</div>
-        <span class="dept-count">${emps.length} άτομα</span>
-      </div>
-      <div class="dept-body">
-        ${emps.map(emp => `
-          <div class="emp-row">
-            <div class="emp-info">
-              <div class="emp-name">${emp.name}</div>
-              <div class="emp-shift">🕐 ${emp.shift_start}–${emp.shift_end}</div>
-            </div>
-            <div class="emp-status ${emp.status}" onclick="toggleStatus(${emp.id})">${emp.status==='ok'?'✓':'!'}</div>
-          </div>`).join('')}
-      </div>`;
+    card.innerHTML = '<div class="dept-header"><div class="dept-name">' + icon + ' ' + dept + '</div><span class="dept-count">' + emps.length + ' άτομα</span></div><div class="dept-body">' +
+      emps.map(function(emp) {
+        const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
+        const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
+        return '<div class="emp-row"><div class="emp-info"><div class="emp-name">' + emp.name + '</div><div class="emp-shift">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div></div>';
+      }).join('') + '</div>';
     grid.appendChild(card);
   });
-}
-
-function toggleStatus(id) {
-  const emp = employees.find(e => e.id === id);
-  if (!emp) return;
-  emp.status = emp.status === 'ok' ? 'missing' : 'ok';
-  updateStats(); renderDepts(); renderEmployeesFull();
 }
 
 function renderEmployeesFull() {
   const list = document.getElementById('emp-list-full');
   const grouped = groupByDept();
   list.innerHTML = '';
-  Object.entries(grouped).forEach(([dept, emps]) => {
+  Object.entries(grouped).forEach(function([dept, emps]) {
     const icon = ICONS[dept] || '🏢';
     const s = document.createElement('div');
     s.style.marginBottom = '20px';
-    s.innerHTML = `
-      <div style="font-size:13px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">${icon} ${dept}</div>
-      <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden">
-        ${emps.map((emp,i) => `
-          <div style="display:flex;align-items:center;gap:14px;padding:14px 18px;${i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':''}">
-            <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">${emp.name.charAt(0)}</div>
-            <div style="flex:1">
-              <div style="font-size:14px;color:var(--cream)">${emp.name}</div>
-              <div style="font-size:12px;color:var(--text-muted)">🕐 ${emp.shift_start}–${emp.shift_end}</div>
-            </div>
-            <div class="emp-status ${emp.status}" onclick="toggleStatus(${emp.id})">${emp.status==='ok'?'✓':'!'}</div>
-          </div>`).join('')}
-      </div>`;
+    s.innerHTML = '<div style="font-size:13px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">' + icon + ' ' + dept + '</div><div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden">' +
+      emps.map(function(emp, i) {
+        const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
+        const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
+        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div></div>';
+      }).join('') + '</div>';
     list.appendChild(s);
   });
 }
 
 function renderSchedule() {
   const days = ['Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή'];
-  document.getElementById('schedule-grid').innerHTML = `
-    <div style="overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;font-size:13px">
-        <thead><tr>
-          <th style="text-align:left;padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">Εργαζόμενος</th>
-          ${days.map(d=>`<th style="padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">${d}</th>`).join('')}
-        </tr></thead>
-        <tbody>${employees.map(emp=>`
-          <tr style="border-bottom:1px solid rgba(255,255,255,0.03)">
-            <td style="padding:10px 14px"><div style="color:var(--cream)">${emp.name}</div><div style="font-size:11px;color:var(--text-muted)">${emp.department}</div></td>
-            ${days.map(()=>`<td style="padding:10px 14px;text-align:center"><div style="background:rgba(76,175,125,0.12);border:1px solid rgba(76,175,125,0.25);border-radius:6px;padding:4px 8px;font-size:11px;color:#7ddba9">${emp.shift_start}–${emp.shift_end}</div></td>`).join('')}
-          </tr>`).join('')}
-        </tbody>
-      </table>
-    </div>`;
+  document.getElementById('schedule-grid').innerHTML = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr><th style="text-align:left;padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">Εργαζόμενος</th>' + days.map(function(d){return '<th style="padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">' + d + '</th>';}).join('') + '</tr></thead><tbody>' + employees.map(function(emp){return '<tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:10px 14px"><div style="color:var(--cream)">' + emp.name + '</div><div style="font-size:11px;color:var(--text-muted)">' + emp.department + '</div></td>' + days.map(function(){return '<td style="padding:10px 14px;text-align:center"><div style="background:rgba(76,175,125,0.12);border:1px solid rgba(76,175,125,0.25);border-radius:6px;padding:4px 8px;font-size:11px;color:#7ddba9">' + emp.shift_start + '–' + emp.shift_end + '</div></td>';}).join('') + '</tr>';}).join('') + '</tbody></table></div>';
 }
 
 function renderAlerts() {
-  const missing = employees.filter(e => e.status === 'missing');
+  const missing = employees.filter(function(e){ return e.status === 'missing'; });
   const el = document.getElementById('alerts-view');
-  if (!missing.length) { el.innerHTML = `<div class="loading">✅ Δεν υπάρχουν εκκρεμείς ειδοποιήσεις</div>`; return; }
-  el.innerHTML = `<div style="display:flex;flex-direction:column;gap:10px">${missing.map(emp=>`
-    <div style="background:rgba(224,92,75,0.06);border:1px solid rgba(224,92,75,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px">
-      <div style="font-size:20px">🔴</div>
-      <div style="flex:1"><div style="color:var(--cream)">${emp.name}</div><div style="font-size:12px;color:var(--text-muted)">${emp.department} • ${emp.shift_start}–${emp.shift_end} • Δεν δήλωσε</div></div>
-      <div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div>
-    </div>`).join('')}
-  </div>`;
+  if (!missing.length) { el.innerHTML = '<div class="loading">✅ Δεν υπάρχουν εκκρεμείς ειδοποιήσεις</div>'; return; }
+  el.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px">' + missing.map(function(emp){ return '<div style="background:rgba(224,92,75,0.06);border:1px solid rgba(224,92,75,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1"><div style="color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">' + emp.department + ' • ' + emp.shift_start + '–' + emp.shift_end + ' • Δεν δήλωσε</div></div><div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div></div>'; }).join('') + '</div>';
 }
 
 function setNav(el, view) {
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
   el.classList.add('active');
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
   document.getElementById('view-'+view).classList.add('active');
-  const titles = {dashboard:'Dashboard',employees:'Εργαζόμενοι',schedule:'Πρόγραμμα',alerts:'Ειδοποιήσεις'};
+  var titles = {dashboard:'Dashboard',employees:'Εργαζόμενοι',schedule:'Πρόγραμμα',alerts:'Ειδοποιήσεις'};
   document.getElementById('page-title').textContent = titles[view];
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
@@ -364,50 +398,53 @@ function setNav(el, view) {
 }
 
 function showToast(msg) {
-  const now = new Date().toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
+  var now = new Date().toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
   document.getElementById('toast-time').textContent = now;
   document.getElementById('toast-body').innerHTML = msg;
-  const t = document.getElementById('sms-toast');
+  var t = document.getElementById('sms-toast');
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
+  setTimeout(function(){ t.classList.remove('show'); }, 4000);
 }
 
 function simulateSMS() {
-  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome').catch(()=>{});
-  showToast(`<strong>⚠️ GAIA GARDEN:</strong> WhatsApp εστάλη στον Μάστερ!`);
+  fetch('https://shiftkos-whatsapp-3139.twil.io/welcome').catch(function(){});
+  showToast('<strong>⚠️ GAIA GARDEN:</strong> WhatsApp εστάλη στον Μάστερ!');
 }
 
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
 function closeModal() { document.getElementById('modal-overlay').classList.remove('show'); }
 
 async function addEmployee() {
-  const name = document.getElementById('new-name').value.trim().toUpperCase();
-  const dept = document.getElementById('new-dept').value;
-  const start = document.getElementById('new-start').value;
-  const end = document.getElementById('new-end').value;
+  var name = document.getElementById('new-name').value.trim().toUpperCase();
+  var dept = document.getElementById('new-dept').value;
+  var start = document.getElementById('new-start').value;
+  var end = document.getElementById('new-end').value;
   if (!name) { alert('Βάλε όνομα!'); return; }
 
-  const btn = document.getElementById('save-btn');
+  var btn = document.getElementById('save-btn');
   btn.textContent = '⏳ Αποθήκευση...';
   btn.disabled = true;
 
-  const { data, error } = await sb.from('employees').insert([{
-    name, department: dept, shift_start: start, shift_end: end
-  }]).select();
+  var result = await sb.from('employees').insert([{ name: name, department: dept, shift_start: start, shift_end: end, status: 'missing' }]).select();
 
   btn.textContent = '💾 Αποθήκευση';
   btn.disabled = false;
 
-  if (error) { alert('❌ ' + error.message); return; }
+  if (result.error) { alert('❌ ' + result.error.message); return; }
 
-  employees.push({...data[0], status: 'ok'});
-  employees.sort((a,b) => a.department.localeCompare(b.department) || a.name.localeCompare(b.name));
-  updateStats(); renderDepts(); closeModal();
+  employees.push(Object.assign({}, result.data[0], {status: 'missing'}));
+  employees.sort(function(a,b){ return a.department.localeCompare(b.department) || a.name.localeCompare(b.name); });
+  updateStats();
+  renderDepts();
+  closeModal();
   document.getElementById('new-name').value = '';
-  showToast(`✅ <strong>${name}</strong> προστέθηκε στο Supabase!`);
+  showToast('✅ <strong>' + name + '</strong> προστέθηκε!');
 }
 
-loadEmployees();
+// Auto-refresh κάθε 30 δευτερόλεπτα
+setInterval(function() {
+  if (currentHotel) loadEmployees();
+}, 30000);
 </script>
 </body>
 </html>
