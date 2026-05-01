@@ -410,19 +410,16 @@ function showToast(msg) {
 async function simulateSMS() {
   const phone = currentHotel ? currentHotel.master_phone : '';
   if (!phone) { alert('Βάλε αριθμό Μάστερ στις Ρυθμίσεις!'); return; }
-  await fetch('https://api.apifon.com/v1/sms', {
+  await fetch('/api/send-sms', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + APIFON_TOKEN
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      recipients: [{ phone: phone }],
-      text: 'Test μήνυμα από ShiftKos! Το σύστημα λειτουργεί! ✅',
-      sender: 'ShiftKos'
+      phone: phone,
+      message: 'Test μήνυμα από ShiftKos! Το σύστημα λειτουργεί! ✅'
     })
   });
   showToast('<strong>✅ SMS εστάλη στον Μάστερ!</strong>');
+}
 }
 
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
