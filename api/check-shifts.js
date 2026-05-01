@@ -5,88 +5,78 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY
 );
 
-const TWILIO_FUNCTION_URL = 'https://shiftkos-whatsapp-3139.twil.io/welcome';
+const APIFON_TOKEN = process.env.APIFON_TOKEN;
+
+async function sendSMS(phone, message) {
+  const response = await fetch('https://api.apifon.com/v1/sms', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + APIFON_TOKEN
+    },
+    body: JSON.stringify({
+      recipients: [{ phone: phone }],
+      text: message,
+      sender: 'ShiftKos'
+    })
+  });
+  return response.json();
+}
 
 export default async function handler(req, res) {
-  // Security check
-  if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
+  if (req.headers.authorization !== 'Bearer ' + process.env.CRON_SECRET) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
   const now = new Date();
-  const currentTime = now.toLocaleTimeString('el-GR', { hour: '2-digit', minute: '2-digit', hour12: false });
-  
-  // Get all employees
-  const { data: employees, error } = await supabase
-    .from('employees')
-    .select('*');
+  const currentTime = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
 
-  if (error) return res.status(500).json({ error: error.message });
-
+  const { data: hotels } = await supabase.from('hotels').select('*');
   const alerts = [];
 
-  for (const emp of employees) {
-    const shiftStart = emp.shift_start; // e.g. "07:00"
-    const shiftEnd = emp.shift_end;     // e.g. "15:30"
+  for (const hotel of hotels) {
+    const { data: employees } = await supabase
+      .from('employees')
+      .select('*')
+      .eq('hotel_id', hotel.id);
 
-    // Check if 10 minutes have passed since shift start
-    const startPlus10 = addMinutes(shiftStart, 10);
-    const endPlus10 = addMinutes(shiftEnd, 10);
+    if (!employees) continue;
 
-    // Check for missing check-in
-    if (currentTime === startPlus10) {
-      const { data: checkin } = await supabase
-        .from('checkins')
-        .select('*')
-        .eq('employee_id', emp.id)
-        .eq('type', 'start')
-        .gte('created_at', todayStart())
-        .single();
+    for (const emp of employees) {
+      const startPlus10 = addMinutes(emp.shift_start, 10);
+      const endPlus10 = addMinutes(emp.shift_end, 10);
 
-      if (!checkin) {
-        alerts.push(`${emp.name} (${emp.department}) δεν δήλωσε ΕΝΑΡΞΗ βάρδιας ${shiftStart}`);
+      if (currentTime === startPlus10 && emp.status === 'missing') {
+        const msg = emp.name + ' (' + emp.department + ') δεν δήλωσε ΕΝΑΡΞΗ βάρδιας ' + emp.shift_start + '. — ShiftKos';
+        if (hotel.master_phone) {
+          await sendSMS(hotel.master_phone, msg);
+          alerts.push(msg);
+        }
+      }
+
+      if (currentTime === endPlus10 && emp.status === 'ok') {
+        const msg = emp.name + ' (' + emp.department + ') δεν δήλωσε ΛΗΞΗ βάρδιας ' + emp.shift_end + '. — ShiftKos';
+        if (hotel.master_phone) {
+          await sendSMS(hotel.master_phone, msg);
+          alerts.push(msg);
+        }
       }
     }
-
-    // Check for missing check-out
-    if (currentTime === endPlus10) {
-      const { data: checkout } = await supabase
-        .from('checkins')
-        .select('*')
-        .eq('employee_id', emp.id)
-        .eq('type', 'end')
-        .gte('created_at', todayStart())
-        .single();
-
-      if (!checkout) {
-        alerts.push(`${emp.name} (${emp.department}) δεν δήλωσε ΛΗΞΗ βάρδιας ${shiftEnd}`);
-      }
-    }
-  }
-
-  // Send WhatsApp for each alert
-  for (const msg of alerts) {
-    await fetch(`${TWILIO_FUNCTION_URL}?msg=${encodeURIComponent(msg)}`);
   }
 
   return res.status(200).json({ 
-    checked: employees.length, 
+    time: currentTime,
     alerts: alerts.length,
-    messages: alerts,
-    time: currentTime
+    messages: alerts
   });
 }
 
 function addMinutes(time, mins) {
-  const [h, m] = time.split(':').map(Number);
+  const parts = time.split(':');
+  const h = parseInt(parts[0]);
+  const m = parseInt(parts[1]);
   const total = h * 60 + m + mins;
   const newH = Math.floor(total / 60) % 24;
   const newM = total % 60;
-  return `${String(newH).padStart(2,'0')}:${String(newM).padStart(2,'0')}`;
-}
-
-function todayStart() {
-  const d = new Date();
-  d.setHours(0,0,0,0);
-  return d.toISOString();
+  return newH.toString().padStart(2,'0') + ':' + newM.toString().padStart(2,'0');
 }
