@@ -210,7 +210,7 @@
         <div class="settings-box">
           <h3>🏨 Στοιχεία Ξενοδοχείου</h3>
           <div class="settings-field"><label>ΟΝΟΜΑ ΞΕΝΟΔΟΧΕΙΟΥ</label><input type="text" id="set-hotel-name" placeholder="π.χ. Gaia Garden"></div>
-          <div class="settings-field"><label>ΚΙΝΗΤΟ ΜΑΣΤΕΡ</label><input type="text" id="set-master-phone" placeholder="π.χ. +306912345678"></div>
+          <div class="settings-field"><label>ΚΙΝΗΤΟ ΜΑΣΤΕΡ</label><input type="text" id="set-master-phone" placeholder="π.χ. 306912345678"></div>
           <button class="btn-save-settings" onclick="saveSettings()">💾 Αποθήκευση</button>
         </div>
         <div class="settings-box">
@@ -267,7 +267,6 @@
 <script>
 const SUPABASE_URL = 'https://yohhvfykdlzcrnnorhke.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_s0Q12lYyridNT8Yos-7qVQ_z_3ACT95';
-const APIFON_TOKEN = 'VOBzxOd5ydu7sUSDbbeocp9B9jEELXoEX38UKpTMtLaEsJLa5e4HCak3KVRqg1T0';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const ICONS = {'Εστιατόριο':'🍽️','Μπαρ':'🍹','Κουζίνα':'👨‍🍳','Υποδοχή':'🏨','Οροφοκομία':'🛏️','Συντήρηση':'🔧','Κήπος':'🌿'};
 let employees = [];
@@ -413,13 +412,9 @@ async function simulateSMS() {
   await fetch('/api/send-sms', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      phone: phone,
-      message: 'Test μήνυμα από ShiftKos! Το σύστημα λειτουργεί! ✅'
-    })
+    body: JSON.stringify({ phone: phone, message: 'Test μήνυμα από ShiftKos! Το σύστημα λειτουργεί! ✅' })
   });
   showToast('<strong>✅ SMS εστάλη στον Μάστερ!</strong>');
-}
 }
 
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
@@ -472,17 +467,10 @@ async function sendAlert(name, dept, time, type) {
   const phone = currentHotel ? currentHotel.master_phone : '';
   if (!phone) return;
   const msg = name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '. — ShiftKos';
-  await fetch('https://api.apifon.com/v1/sms', {
+  await fetch('/api/send-sms', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + APIFON_TOKEN
-    },
-    body: JSON.stringify({
-      recipients: [{ phone: phone }],
-      text: msg,
-      sender: 'ShiftKos'
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone, message: msg })
   });
   showToast('⚠️ <strong>' + name + '</strong> δεν δήλωσε ' + type + '!');
 }
