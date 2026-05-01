@@ -6,6 +6,10 @@
     {
       "path": "/api/check-shifts",
       "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/reset-status",
+      "schedule": "0 3 * * *"
     }
   ]
 }
