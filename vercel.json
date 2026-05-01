@@ -5,7 +5,7 @@
   "crons": [
     {
       "path": "/api/check-shifts",
-      "schedule": "*/10 * * * *"
+      "schedule": "0 4 * * *"
     }
   ]
 }
