@@ -349,7 +349,7 @@ function renderDepts() {
       emps.map(function(emp) {
         const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
         const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
-        return '<div class="emp-row"><div class="emp-info"><div class="emp-name">' + emp.name + '</div><div class="emp-shift">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-delete" onclick="deleteEmployee(' + emp.id + ',\'' + emp.name + '\')">🗑️</button></div>';
+        return '<div class="emp-row"><div class="emp-info"><div class="emp-name">' + emp.name + '</div><div class="emp-shift">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-delete" onclick="deleteEmployee(\'' + emp.employees + '\',\'' + emp.name + '\')">🗑️</button></div>';
       }).join('') + '</div>';
     grid.appendChild(card);
   });
@@ -369,17 +369,17 @@ function renderEmployeesFull() {
       emps.map(function(emp, i) {
         const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
         const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
-        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-delete" onclick="deleteEmployee(' + emp.id + ',\'' + emp.name + '\')">🗑️</button></div>';
+        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-delete" onclick="deleteEmployee(\'' + emp.employees + '\',\'' + emp.name + '\')">🗑️</button></div>';
       }).join('') + '</div>';
     list.appendChild(s);
   });
 }
 
-async function deleteEmployee(id, name) {
+async function deleteEmployee(empKey, name) {
   if (!confirm('Διαγραφή ' + name + ';')) return;
-  var result = await sb.from('employees').delete().eq('employees', id);
+  var result = await sb.from('employees').delete().eq('employees', empKey);
   if (result.error) { alert('❌ ' + result.error.message); return; }
-  employees = employees.filter(function(e) { return e.employees !== id; });
+  employees = employees.filter(function(e) { return e.employees !== empKey; });
   updateStats();
   renderDepts();
   renderEmployeesFull();
