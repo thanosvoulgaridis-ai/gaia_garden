@@ -269,10 +269,8 @@
 <script>
 const SUPABASE_URL = 'https://yohhvfykdlzcrnnorhke.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_s0Q12lYyridNT8Yos-7qVQ_z_3ACT95';
+const WORKER_URL = 'https://shiftkos-sms.thanos2-1.workers.dev';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-const TWILIO_ACCOUNT_SID = 'ACd3f2ec647a186027752c1e625c7507e3';
-const TWILIO_AUTH_TOKEN = '884094b96fd644374c50e926d4c7401e';
-const TWILIO_WA_FROM = 'whatsapp:+12409801521';
 const ICONS = {'Εστιατόριο':'🍽️','Μπαρ':'🍹','Κουζίνα':'👨‍🍳','Υποδοχή':'🏨','Οροφοκομία':'🛏️','Συντήρηση':'🔧','Κήπος':'🌿'};
 let employees = [];
 let currentHotel = null;
@@ -286,19 +284,10 @@ setInterval(updateClock, 1000);
 updateClock();
 
 async function sendWhatsApp(to, message) {
-  const url = 'https://api.twilio.com/2010-04-01/Accounts/' + TWILIO_ACCOUNT_SID + '/Messages.json';
-  const body = new URLSearchParams({
-    From: TWILIO_WA_FROM,
-    To: 'whatsapp:' + to,
-    Body: message
-  });
-  const response = await fetch(url, {
+  const response = await fetch(WORKER_URL, {
     method: 'POST',
-    headers: {
-      'Authorization': 'Basic ' + btoa(TWILIO_ACCOUNT_SID + ':' + TWILIO_AUTH_TOKEN),
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: body.toString()
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ to: to, message: message })
   });
   return response.json();
 }
