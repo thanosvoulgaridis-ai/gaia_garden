@@ -87,6 +87,8 @@
   .emp-status.ok { background: rgba(76,175,125,0.15); border: 1px solid rgba(76,175,125,0.3); color: var(--success); }
   .emp-status.missing { background: rgba(224,92,75,0.15); border: 1px solid rgba(224,92,75,0.3); color: var(--alert); }
   .emp-status.done { background: rgba(136,153,170,0.15); border: 1px solid rgba(136,153,170,0.3); color: var(--text-muted); }
+  .btn-delete { background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.3); border-radius: 6px; padding: 4px 8px; color: var(--alert); font-size: 11px; cursor: pointer; flex-shrink: 0; }
+  .btn-delete:hover { background: rgba(224,92,75,0.25); }
   .sms-toast { position: fixed; bottom: 24px; right: 24px; width: 340px; background: #111827; border-radius: 18px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); z-index: 100; transform: translateY(120px); opacity: 0; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.08); }
   .sms-toast.show { transform: translateY(0); opacity: 1; }
   .toast-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -347,7 +349,7 @@ function renderDepts() {
       emps.map(function(emp) {
         const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
         const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
-        return '<div class="emp-row"><div class="emp-info"><div class="emp-name">' + emp.name + '</div><div class="emp-shift">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div></div>';
+        return '<div class="emp-row"><div class="emp-info"><div class="emp-name">' + emp.name + '</div><div class="emp-shift">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-delete" onclick="deleteEmployee(' + emp.id + ',\'' + emp.name + '\')">🗑️</button></div>';
       }).join('') + '</div>';
     grid.appendChild(card);
   });
@@ -367,10 +369,21 @@ function renderEmployeesFull() {
       emps.map(function(emp, i) {
         const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
         const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
-        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div></div>';
+        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-delete" onclick="deleteEmployee(' + emp.id + ',\'' + emp.name + '\')">🗑️</button></div>';
       }).join('') + '</div>';
     list.appendChild(s);
   });
+}
+
+async function deleteEmployee(id, name) {
+  if (!confirm('Διαγραφή ' + name + ';')) return;
+  var result = await sb.from('employees').delete().eq('id', id);
+  if (result.error) { alert('❌ ' + result.error.message); return; }
+  employees = employees.filter(function(e) { return e.id !== id; });
+  updateStats();
+  renderDepts();
+  renderEmployeesFull();
+  showToast('🗑️ <strong>' + name + '</strong> διαγράφηκε!');
 }
 
 function renderSchedule() {
