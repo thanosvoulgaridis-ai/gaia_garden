@@ -377,9 +377,9 @@ function renderEmployeesFull() {
 
 async function deleteEmployee(id, name) {
   if (!confirm('Διαγραφή ' + name + ';')) return;
-  var result = await sb.from('employees').delete().eq('id', id);
+  var result = await sb.from('employees').delete().eq('employees', id);
   if (result.error) { alert('❌ ' + result.error.message); return; }
-  employees = employees.filter(function(e) { return e.id !== id; });
+  employees = employees.filter(function(e) { return e.employees !== id; });
   updateStats();
   renderDepts();
   renderEmployeesFull();
