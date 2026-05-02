@@ -422,26 +422,13 @@ function showToast(msg) {
 async function simulateSMS() {
   const phone = currentHotel ? currentHotel.master_phone : '';
   if (!phone) { alert('Βάλε αριθμό Μάστερ στις Ρυθμίσεις!'); return; }
-  try {
-    const response = await fetch('https://api.apifon.com/v1/sms', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer VOBzxOd5ydu7sUSDbbeocp9B9jEELXoEX38UKpTMtLaEsJLa5e4HCak3KVRqg1T0'
-      },
-      body: JSON.stringify({
-        recipients: [{ phone: phone }],
-        text: 'Test μήνυμα από ShiftKos! Το σύστημα λειτουργεί! ✅',
-        sender: 'ShiftKos'
-      })
-    });
-    const data = await response.json();
-    console.log('Apifon response:', JSON.stringify(data));
-    showToast('<strong>✅ SMS εστάλη στον Μάστερ!</strong>');
-  } catch(e) {
-    console.log('Error:', e.message);
-    showToast('<strong>❌ Error: </strong>' + e.message);
-  }
+  await fetch('/api/send-sms', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone, message: 'Test μήνυμα από ShiftKos! Το σύστημα λειτουργεί! ✅' })
+  });
+  showToast('<strong>✅ SMS εστάλη στον Μάστερ!</strong>');
+}
 }
 
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
