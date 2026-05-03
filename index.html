@@ -359,12 +359,7 @@ function updateStats() {
   document.getElementById('stat-depts').textContent = depts;
   document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
   var badge = document.getElementById('alert-badge');
-  if (missing > 0 && !alertsSeen) {
-    badge.textContent = missing;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
+  badge.classList.add('hidden');
 }
 
 function renderDepts() {
