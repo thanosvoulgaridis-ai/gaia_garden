@@ -29,7 +29,6 @@
   .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
   .login-error { color: var(--alert); font-size: 13px; text-align: center; margin-top: 16px; display: none; }
   .dashboard { display: none; width: 100%; height: 100vh; }
-  .dashboard.show { display: flex; }
   .sidebar { width: var(--sidebar-w); background: rgba(7,15,30,0.95); border-right: 1px solid rgba(201,168,76,0.1); display: flex; flex-direction: column; padding: 28px 0; flex-shrink: 0; z-index: 10; height: 100vh; overflow-y: auto; }
   .sidebar-logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
   .sidebar-logo .logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--gold); }
@@ -275,7 +274,6 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const ICONS = {'Εστιατόριο':'🍽️','Μπαρ':'🍹','Κουζίνα':'👨‍🍳','Υποδοχή':'🏨','Οροφοκομία':'🛏️','Συντήρηση':'🔧','Κήπος':'🌿'};
 let employees = [];
 let currentHotel = null;
-let alertsSeen = false;
 let unreadAlerts = 0;
 
 function updateClock() {
@@ -313,7 +311,7 @@ async function doLogin() {
   const { data, error } = await sb.from('hotels').select('*').eq('username', username).eq('password', password).single();
   if (error || !data) { document.getElementById('login-error').style.display = 'block'; return; }
   currentHotel = data;
-  alertsSeen = false;
+  unreadAlerts = 0;
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'flex';
   document.getElementById('hotel-name-display').textContent = '🏨 ' + data.name;
@@ -329,7 +327,7 @@ document.getElementById('login-password').addEventListener('keypress', function(
 function doLogout() {
   currentHotel = null;
   employees = [];
-  alertsSeen = false;
+  unreadAlerts = 0;
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('login-username').value = '';
@@ -360,7 +358,12 @@ function updateStats() {
   document.getElementById('stat-depts').textContent = depts;
   document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
   var badge = document.getElementById('alert-badge');
-  badge.classList.add('hidden');
+  if (unreadAlerts > 0) {
+    badge.textContent = unreadAlerts;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
 }
 
 function renderDepts() {
@@ -445,7 +448,6 @@ function setNav(el, view) {
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
   if (view==='alerts') {
-    alertsSeen = true;
     unreadAlerts = 0;
     document.getElementById('alert-badge').classList.add('hidden');
     renderAlerts();
@@ -507,17 +509,20 @@ async function savePassword() {
   showToast('✅ Password άλλαξε!');
 }
 
-unreadAlerts++;
-  var badge = document.getElementById('alert-badge');
-  badge.textContent = unreadAlerts;
-  badge.classList.remove('hidden');
+async function sendAlert(name, dept, time, type) {
+  const phone = currentHotel ? currentHotel.master_phone : '';
+  if (!phone) return;
+  await sb.from('alerts').insert([{
     employee_name: name,
     department: dept,
     shift_time: time,
     type: type,
     hotel_id: currentHotel.id
   }]);
-  alertsSeen = false;
+  unreadAlerts++;
+  var badge = document.getElementById('alert-badge');
+  badge.textContent = unreadAlerts;
+  badge.classList.remove('hidden');
   const msg = '⚠️ SHIFTKOS: ' + name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '.';
   await sendWhatsApp(phone, msg);
   showToast('⚠️ <strong>' + name + '</strong> δεν δήλωσε ' + type + '!');
