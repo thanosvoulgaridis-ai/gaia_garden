@@ -104,7 +104,6 @@
   .modal-field { margin-bottom: 16px; }
   .modal-field label { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 6px; }
   .modal-field input, .modal-field select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
-  .modal-field input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
   .btn-cancel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 20px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; }
   .btn-save { background: linear-gradient(135deg, var(--gold), #8a6020); border: none; border-radius: 10px; padding: 10px 24px; color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
@@ -246,11 +245,11 @@
         <option>Υποδοχή</option><option>Οροφοκομία</option><option>Συντήρηση</option><option>Κήπος</option>
       </select>
     </div>
-    <div class="modal-field"><label>ΩΡΑ ΕΝΑΡΞΗΣ</label>
-      <input type="time" id="new-end" value="15:30">
+    <div class="modal-field"><label>ΩΡΑ ΕΝΑΡΞΗΣ (π.χ. 21:00)</label>
+      <input type="text" id="new-start" placeholder="07:00" maxlength="5">
     </div>
-    <div class="modal-field"><label>ΩΡΑ ΛΗΞΗΣ</label>
-      <input type="time" id="new-end" value="15:30">
+    <div class="modal-field"><label>ΩΡΑ ΛΗΞΗΣ (π.χ. 23:30)</label>
+      <input type="text" id="new-end" placeholder="15:30" maxlength="5">
     </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Άκυρο</button>
@@ -465,10 +464,11 @@ function closeModal() { document.getElementById('modal-overlay').classList.remov
 async function addEmployee() {
   var name = document.getElementById('new-name').value.trim().toUpperCase();
   var dept = document.getElementById('new-dept').value;
-  var start = document.getElementById('new-start').value;
-  var end = document.getElementById('new-end').value;
+  var start = document.getElementById('new-start').value.trim();
+  var end = document.getElementById('new-end').value.trim();
   if (!name) { alert('Βάλε όνομα!'); return; }
-  if (!start || !end) { alert('Βάλε ώρες!'); return; }
+  if (!start.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα έναρξης σε μορφή ΩΩ:ΛΛ π.χ. 21:00'); return; }
+  if (!end.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα λήξης σε μορφή ΩΩ:ΛΛ π.χ. 23:30'); return; }
   var btn = document.getElementById('save-btn');
   btn.textContent = '⏳ Αποθήκευση...';
   btn.disabled = true;
@@ -482,6 +482,8 @@ async function addEmployee() {
   renderDepts();
   closeModal();
   document.getElementById('new-name').value = '';
+  document.getElementById('new-start').value = '';
+  document.getElementById('new-end').value = '';
   showToast('✅ <strong>' + name + '</strong> προστέθηκε!');
 }
 
