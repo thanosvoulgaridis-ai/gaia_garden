@@ -446,7 +446,7 @@ function setNav(el, view) {
   document.getElementById('page-title').textContent = titles[view];
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
-  if (view==='alerts') renderAlerts();
+  if (view==='alerts') { renderAlerts(); document.getElementById('alert-badge').classList.add('hidden'); }
 }
 
 function showToast(msg) {
