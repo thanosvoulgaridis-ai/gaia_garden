@@ -144,7 +144,7 @@
       <div class="nav-item active" onclick="setNav(this,'dashboard')"><span class="icon">📊</span> Dashboard</div>
       <div class="nav-item" onclick="setNav(this,'employees')"><span class="icon">👥</span> Εργαζόμενοι</div>
       <div class="nav-item" onclick="setNav(this,'schedule')"><span class="icon">📅</span> Πρόγραμμα</div>
-      <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις <span class="nav-badge" id="alert-badge">0</span></div>
+      <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις <span class="nav-badge hidden" id="alert-badge">0</span></div>
     </div>
     <div class="nav-section" style="margin-top:12px">
       <div class="nav-label">Σύστημα</div>
@@ -275,6 +275,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const ICONS = {'Εστιατόριο':'🍽️','Μπαρ':'🍹','Κουζίνα':'👨‍🍳','Υποδοχή':'🏨','Οροφοκομία':'🛏️','Συντήρηση':'🔧','Κήπος':'🌿'};
 let employees = [];
 let currentHotel = null;
+let alertsSeen = false;
 
 function updateClock() {
   const now = new Date();
@@ -311,6 +312,7 @@ async function doLogin() {
   const { data, error } = await sb.from('hotels').select('*').eq('username', username).eq('password', password).single();
   if (error || !data) { document.getElementById('login-error').style.display = 'block'; return; }
   currentHotel = data;
+  alertsSeen = false;
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'flex';
   document.getElementById('hotel-name-display').textContent = '🏨 ' + data.name;
@@ -326,6 +328,7 @@ document.getElementById('login-password').addEventListener('keypress', function(
 function doLogout() {
   currentHotel = null;
   employees = [];
+  alertsSeen = false;
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('login-username').value = '';
@@ -354,14 +357,14 @@ function updateStats() {
   document.getElementById('stat-ok').textContent = ok;
   document.getElementById('stat-missing').textContent = missing;
   document.getElementById('stat-depts').textContent = depts;
+  document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
   var badge = document.getElementById('alert-badge');
-  if (missing > 0) {
+  if (missing > 0 && !alertsSeen) {
     badge.textContent = missing;
     badge.classList.remove('hidden');
   } else {
     badge.classList.add('hidden');
   }
-  document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
 }
 
 function renderDepts() {
@@ -434,7 +437,6 @@ async function renderAlerts() {
     const timeStr = dt.toLocaleTimeString('el-GR', {hour:'2-digit', minute:'2-digit'});
     return '<div style="background:rgba(224,92,75,0.06);border:1px solid rgba(224,92,75,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1"><div style="color:var(--cream);font-weight:500">' + alert.employee_name + '</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px">' + alert.department + ' • ' + alert.shift_time + ' • Δεν δήλωσε ' + alert.type + '</div><div style="font-size:11px;color:var(--gold);margin-top:4px">🕐 ' + dateStr + ' ' + timeStr + '</div></div><div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div></div>';
   }).join('') + '</div>';
-  document.getElementById('alert-badge').classList.add('hidden');
 }
 
 function setNav(el, view) {
@@ -446,7 +448,11 @@ function setNav(el, view) {
   document.getElementById('page-title').textContent = titles[view];
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
-  if (view==='alerts') { renderAlerts(); document.getElementById('alert-badge').classList.add('hidden'); }
+  if (view==='alerts') {
+    alertsSeen = true;
+    document.getElementById('alert-badge').classList.add('hidden');
+    renderAlerts();
+  }
 }
 
 function showToast(msg) {
@@ -514,6 +520,7 @@ async function sendAlert(name, dept, time, type) {
     type: type,
     hotel_id: currentHotel.id
   }]);
+  alertsSeen = false;
   const msg = '⚠️ SHIFTKOS: ' + name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '.';
   await sendWhatsApp(phone, msg);
   showToast('⚠️ <strong>' + name + '</strong> δεν δήλωσε ' + type + '!');
