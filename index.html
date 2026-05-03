@@ -42,6 +42,7 @@
   .nav-item.active { background: rgba(201,168,76,0.1); color: var(--gold); }
   .nav-item .icon { width: 18px; text-align: center; font-size: 15px; }
   .nav-badge { margin-left: auto; background: var(--alert); color: white; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; }
+  .nav-badge.hidden { display: none; }
   .sidebar-footer { margin-top: auto; padding: 20px 24px 0; border-top: 1px solid rgba(255,255,255,0.05); }
   .master-card { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 12px; }
   .master-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
@@ -353,7 +354,13 @@ function updateStats() {
   document.getElementById('stat-ok').textContent = ok;
   document.getElementById('stat-missing').textContent = missing;
   document.getElementById('stat-depts').textContent = depts;
-  document.getElementById('alert-badge').textContent = missing;
+  var badge = document.getElementById('alert-badge');
+  if (missing > 0) {
+    badge.textContent = missing;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
   document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
 }
 
@@ -413,11 +420,21 @@ function renderSchedule() {
   document.getElementById('schedule-grid').innerHTML = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:13px"><thead><tr><th style="text-align:left;padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">Εργαζόμενος</th>' + days.map(function(d){return '<th style="padding:10px 14px;color:var(--text-muted);font-weight:400;border-bottom:1px solid rgba(255,255,255,0.06)">' + d + '</th>';}).join('') + '</tr></thead><tbody>' + employees.map(function(emp){return '<tr style="border-bottom:1px solid rgba(255,255,255,0.03)"><td style="padding:10px 14px"><div style="color:var(--cream)">' + emp.name + '</div><div style="font-size:11px;color:var(--text-muted)">' + emp.department + '</div></td>' + days.map(function(){return '<td style="padding:10px 14px;text-align:center"><div style="background:rgba(76,175,125,0.12);border:1px solid rgba(76,175,125,0.25);border-radius:6px;padding:4px 8px;font-size:11px;color:#7ddba9">' + emp.shift_start + '–' + emp.shift_end + '</div></td>';}).join('') + '</tr>';}).join('') + '</tbody></table></div>';
 }
 
-function renderAlerts() {
-  const missing = employees.filter(function(e){ return e.status === 'missing'; });
+async function renderAlerts() {
   const el = document.getElementById('alerts-view');
-  if (!missing.length) { el.innerHTML = '<div class="loading">✅ Δεν υπάρχουν εκκρεμείς ειδοποιήσεις</div>'; return; }
-  el.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px">' + missing.map(function(emp){ return '<div style="background:rgba(224,92,75,0.06);border:1px solid rgba(224,92,75,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1"><div style="color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">' + emp.department + ' • ' + emp.shift_start + '–' + emp.shift_end + ' • Δεν δήλωσε</div></div><div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div></div>'; }).join('') + '</div>';
+  el.innerHTML = '<div class="loading">Φόρτωση...</div>';
+  const { data, error } = await sb.from('alerts').select('*').eq('hotel_id', currentHotel.id).order('created_at', { ascending: false }).limit(50);
+  if (error || !data || !data.length) {
+    el.innerHTML = '<div class="loading">✅ Δεν υπάρχουν ειδοποιήσεις</div>';
+    return;
+  }
+  el.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px">' + data.map(function(alert) {
+    const dt = new Date(alert.created_at);
+    const dateStr = dt.toLocaleDateString('el-GR', {weekday:'short', day:'numeric', month:'short'});
+    const timeStr = dt.toLocaleTimeString('el-GR', {hour:'2-digit', minute:'2-digit'});
+    return '<div style="background:rgba(224,92,75,0.06);border:1px solid rgba(224,92,75,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1"><div style="color:var(--cream);font-weight:500">' + alert.employee_name + '</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px">' + alert.department + ' • ' + alert.shift_time + ' • Δεν δήλωσε ' + alert.type + '</div><div style="font-size:11px;color:var(--gold);margin-top:4px">🕐 ' + dateStr + ' ' + timeStr + '</div></div><div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div></div>';
+  }).join('') + '</div>';
+  document.getElementById('alert-badge').classList.add('hidden');
 }
 
 function setNav(el, view) {
@@ -490,6 +507,13 @@ async function savePassword() {
 async function sendAlert(name, dept, time, type) {
   const phone = currentHotel ? currentHotel.master_phone : '';
   if (!phone) return;
+  await sb.from('alerts').insert([{
+    employee_name: name,
+    department: dept,
+    shift_time: time,
+    type: type,
+    hotel_id: currentHotel.id
+  }]);
   const msg = '⚠️ SHIFTKOS: ' + name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '.';
   await sendWhatsApp(phone, msg);
   showToast('⚠️ <strong>' + name + '</strong> δεν δήλωσε ' + type + '!');
