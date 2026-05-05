@@ -14,21 +14,11 @@
     --white: #ffffff; --alert: #e05c4b; --success: #4caf7d;
     --warning: #f0a500; --text-muted: #8899aa; --sidebar-w: 240px;
   }
+
   body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
   html { height: 100%; }
-  .login-screen { position: fixed; inset: 0; background: var(--navy); display: flex; align-items: center; justify-content: center; z-index: 999; }
-  .login-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(232,38,26,0.25); border-radius: 24px; padding: 48px; width: 400px; }
-  .login-logo { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--white); text-align: center; margin-bottom: 4px; }
-  .login-logo span { color: var(--gold); }
-  .login-sub { font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 40px; }
-  .login-field { margin-bottom: 16px; }
-  .login-field label { display: block; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-  .login-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 16px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border 0.2s; }
-  .login-field input:focus { border-color: rgba(232,38,26,0.5); }
-  .login-btn { width: 100%; background: var(--gold); border: none; border-radius: 10px; padding: 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 24px; transition: all 0.2s; }
-  .login-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,38,26,0.35); }
-  .login-error { color: var(--alert); font-size: 13px; text-align: center; margin-top: 16px; display: none; }
-  .dashboard { display: none; width: 100%; height: 100vh; }
+
+  /* ── DESKTOP SIDEBAR ── */
   .sidebar { width: var(--sidebar-w); background: rgba(7,15,35,0.97); border-right: 1px solid rgba(232,38,26,0.12); display: flex; flex-direction: column; padding: 28px 0; flex-shrink: 0; z-index: 10; height: 100vh; overflow-y: auto; }
   .sidebar-logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
   .sidebar-logo .logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--white); }
@@ -50,6 +40,8 @@
   .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .logout-btn { width: 100%; margin-top: 12px; background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.2); border-radius: 8px; padding: 8px; color: var(--alert); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+  /* ── MAIN ── */
   .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; height: 100vh; }
   .topbar { background: rgba(15,28,63,0.9); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 5; }
   .topbar-left h1 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--cream); }
@@ -57,7 +49,9 @@
   .topbar-right { display: flex; align-items: center; gap: 16px; }
   .clock-badge { background: rgba(232,38,26,0.12); border: 1px solid rgba(232,38,26,0.25); border-radius: 10px; padding: 8px 16px; font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); letter-spacing: 2px; }
   .day-badge { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 14px; font-size: 12px; color: var(--text-muted); }
-  .content { padding: 28px 32px; }
+  .content { padding: 28px 32px; padding-bottom: 40px; }
+
+  /* ── STATS ── */
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
   .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; }
   .stat-icon { font-size: 22px; margin-bottom: 12px; }
@@ -67,12 +61,16 @@
   .stat-card.alert-card .stat-val { color: var(--gold); }
   .stat-card.success-card { border-color: rgba(76,175,125,0.3); background: rgba(76,175,125,0.05); }
   .stat-card.success-card .stat-val { color: var(--success); }
+
+  /* ── SECTIONS ── */
   .section { margin-bottom: 28px; }
   .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .section-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--cream); }
   .section-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
   .btn-small { background: rgba(232,38,26,0.12); border: 1px solid rgba(232,38,26,0.35); border-radius: 8px; padding: 7px 14px; color: var(--gold); font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
   .btn-small:hover { background: rgba(232,38,26,0.22); }
+
+  /* ── DEPT CARDS ── */
   .dept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
   .dept-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; }
   .dept-header { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
@@ -92,16 +90,20 @@
   .btn-delete:hover { background: rgba(224,92,75,0.25); }
   .btn-edit { background: rgba(232,38,26,0.1); border: 1px solid rgba(232,38,26,0.3); border-radius: 6px; padding: 4px 8px; color: var(--gold); font-size: 11px; cursor: pointer; flex-shrink: 0; }
   .btn-edit:hover { background: rgba(232,38,26,0.25); }
-  .sms-toast { position: fixed; bottom: 24px; right: 24px; width: 340px; background: #111827; border-radius: 18px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); z-index: 100; transform: translateY(120px); opacity: 0; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.08); }
+
+  /* ── TOAST ── */
+  .sms-toast { position: fixed; bottom: 24px; right: 24px; width: 340px; background: #111827; border-radius: 18px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); z-index: 200; transform: translateY(120px); opacity: 0; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.08); }
   .sms-toast.show { transform: translateY(0); opacity: 1; }
   .toast-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
   .toast-app { width: 34px; height: 34px; background: #25D366; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
   .toast-sender { font-size: 13px; font-weight: 600; }
   .toast-time { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.3); }
   .toast-body { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 12px; }
+
+  /* ── MODALS ── */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
   .modal-overlay.show { opacity: 1; pointer-events: all; }
-  .modal { background: #0d1f3c; border: 1px solid rgba(232,38,26,0.2); border-radius: 20px; padding: 32px; width: 440px; }
+  .modal { background: #0d1f3c; border: 1px solid rgba(232,38,26,0.2); border-radius: 20px; padding: 32px; width: 440px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
   .modal h3 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--cream); margin-bottom: 6px; }
   .modal p { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
   .modal-field { margin-bottom: 16px; }
@@ -111,10 +113,14 @@
   .btn-cancel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 20px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; }
   .btn-save { background: var(--gold); border: none; border-radius: 10px; padding: 10px 24px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
   .btn-save:hover { background: var(--gold-light); }
+
+  /* ── VIEWS ── */
   .view { display: none; }
   .view.active { display: block; }
   .db-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; background: rgba(76,175,125,0.12); border: 1px solid rgba(76,175,125,0.25); border-radius: 6px; padding: 2px 8px; color: var(--success); margin-left: 8px; vertical-align: middle; }
   .loading { text-align: center; padding: 40px; color: var(--text-muted); }
+
+  /* ── SETTINGS ── */
   .settings-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 28px; max-width: 500px; margin-bottom: 20px; }
   .settings-box h3 { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--cream); margin-bottom: 20px; }
   .settings-field { margin-bottom: 16px; }
@@ -122,10 +128,62 @@
   .settings-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
   .btn-save-settings { background: var(--gold); border: none; border-radius: 10px; padding: 10px 24px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; }
   .btn-save-settings:hover { background: var(--gold-light); }
+
+  /* ── LOGIN ── */
+  .login-screen { position: fixed; inset: 0; background: var(--navy); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 24px; }
+  .login-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(232,38,26,0.25); border-radius: 24px; padding: 48px; width: 100%; max-width: 400px; }
+  .login-logo { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--white); text-align: center; margin-bottom: 4px; }
+  .login-logo span { color: var(--gold); }
+  .login-sub { font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 40px; }
+  .login-field { margin-bottom: 16px; }
+  .login-field label { display: block; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .login-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 16px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border 0.2s; }
+  .login-field input:focus { border-color: rgba(232,38,26,0.5); }
+  .login-btn { width: 100%; background: var(--gold); border: none; border-radius: 10px; padding: 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 24px; transition: all 0.2s; }
+  .login-btn:hover { background: var(--gold-light); }
+  .login-error { color: var(--alert); font-size: 13px; text-align: center; margin-top: 16px; display: none; }
+
+  /* ── BOTTOM NAV (mobile only) ── */
+  .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(7,15,35,0.98); border-top: 1px solid rgba(232,38,26,0.15); z-index: 100; padding: 8px 0 env(safe-area-inset-bottom, 8px); }
+  .bottom-nav-inner { display: flex; justify-content: space-around; align-items: center; }
+  .bn-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 12px; cursor: pointer; border-radius: 10px; min-width: 56px; position: relative; }
+  .bn-item .bn-icon { font-size: 20px; }
+  .bn-item .bn-label { font-size: 10px; color: var(--text-muted); }
+  .bn-item.active .bn-label { color: var(--gold); }
+  .bn-item .bn-badge { position: absolute; top: 2px; right: 8px; background: var(--alert); color: white; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 8px; }
+  .bn-item .bn-badge.hidden { display: none; }
+
+  /* ── MOBILE TOPBAR ── */
+  .mobile-topbar { display: none; background: rgba(7,15,35,0.98); border-bottom: 1px solid rgba(232,38,26,0.12); padding: 14px 20px; position: sticky; top: 0; z-index: 5; align-items: center; justify-content: space-between; }
+  .mobile-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--white); }
+  .mobile-logo span { color: var(--gold); }
+  .mobile-clock { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    body { display: block; overflow: auto; height: auto; }
+    .sidebar { display: none; }
+    .main { height: auto; overflow: visible; }
+    .topbar { display: none; }
+    .mobile-topbar { display: flex; }
+    .bottom-nav { display: block; }
+    .content { padding: 16px 16px 100px; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+    .stat-val { font-size: 24px; }
+    .stat-card { padding: 14px; }
+    .dept-grid { grid-template-columns: 1fr; gap: 12px; }
+    .section-title { font-size: 16px; }
+    .sms-toast { left: 16px; right: 16px; width: auto; bottom: 90px; }
+    .modal { border-radius: 16px; padding: 24px; }
+    .modal-actions { flex-direction: column-reverse; }
+    .btn-cancel, .btn-save { width: 100%; text-align: center; padding: 14px; }
+    .settings-box { padding: 20px; }
+  }
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div class="login-screen" id="login-screen">
   <div class="login-box">
     <div class="login-logo">Shift<span>Guard</span></div>
@@ -137,7 +195,10 @@
   </div>
 </div>
 
-<div class="dashboard" id="dashboard">
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard" style="display:none;width:100%">
+
+  <!-- Desktop sidebar -->
   <div class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-text">Shift<span>Guard</span></div>
@@ -148,7 +209,7 @@
       <div class="nav-item active" onclick="setNav(this,'dashboard')"><span class="icon">📊</span> Dashboard</div>
       <div class="nav-item" onclick="setNav(this,'employees')"><span class="icon">👥</span> Εργαζόμενοι</div>
       <div class="nav-item" onclick="setNav(this,'schedule')"><span class="icon">📅</span> Πρόγραμμα</div>
-      <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις <span class="nav-badge hidden" id="alert-badge">0</span></div>
+      <div class="nav-item" onclick="setNav(this,'alerts')"><span class="icon">⚠️</span> Ειδοποιήσεις <span class="nav-badge hidden" id="alert-badge-sidebar">0</span></div>
     </div>
     <div class="nav-section" style="margin-top:12px">
       <div class="nav-label">Σύστημα</div>
@@ -165,7 +226,16 @@
     </div>
   </div>
 
+  <!-- Main content -->
   <div class="main">
+
+    <!-- Mobile topbar -->
+    <div class="mobile-topbar">
+      <div class="mobile-logo">Shift<span>Guard</span></div>
+      <div class="mobile-clock" id="mobile-clock">00:00</div>
+    </div>
+
+    <!-- Desktop topbar -->
     <div class="topbar">
       <div class="topbar-left">
         <h1 id="page-title">Dashboard</h1>
@@ -178,11 +248,12 @@
     </div>
 
     <div class="content">
+      <!-- DASHBOARD VIEW -->
       <div class="view active" id="view-dashboard">
         <div class="stats-row">
           <div class="stat-card success-card"><div class="stat-icon">✅</div><div class="stat-val" id="stat-ok">–</div><div class="stat-label">Δήλωσαν βάρδια</div></div>
           <div class="stat-card alert-card"><div class="stat-icon">⚠️</div><div class="stat-val" id="stat-missing">–</div><div class="stat-label">Δεν δήλωσαν</div></div>
-          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="stat-total">–</div><div class="stat-label">Σύνολο εργαζομένων</div></div>
+          <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val" id="stat-total">–</div><div class="stat-label">Σύνολο</div></div>
           <div class="stat-card"><div class="stat-icon">🏢</div><div class="stat-val" id="stat-depts">–</div><div class="stat-label">Τμήματα</div></div>
         </div>
         <div class="section">
@@ -194,24 +265,28 @@
         </div>
       </div>
 
+      <!-- EMPLOYEES VIEW -->
       <div class="view" id="view-employees">
         <div class="section-header" style="margin-bottom:20px">
-          <div><div class="section-title">👥 Όλοι οι Εργαζόμενοι</div><div class="section-sub" id="emp-subtitle">Φόρτωση...</div></div>
+          <div><div class="section-title">👥 Εργαζόμενοι</div><div class="section-sub" id="emp-subtitle">Φόρτωση...</div></div>
           <button class="btn-small" onclick="openAddModal()">+ Νέος</button>
         </div>
         <div id="emp-list-full"></div>
       </div>
 
+      <!-- SCHEDULE VIEW -->
       <div class="view" id="view-schedule">
         <div class="section-title" style="margin-bottom:20px">📅 Εβδομαδιαίο Πρόγραμμα</div>
         <div id="schedule-grid"></div>
       </div>
 
+      <!-- ALERTS VIEW -->
       <div class="view" id="view-alerts">
         <div class="section-title" style="margin-bottom:20px">⚠️ Ειδοποιήσεις</div>
         <div id="alerts-view"></div>
       </div>
 
+      <!-- SETTINGS VIEW -->
       <div class="view" id="view-settings">
         <div class="section-title" style="margin-bottom:20px">⚙️ Ρυθμίσεις</div>
         <div class="settings-box">
@@ -225,11 +300,40 @@
           <div class="settings-field"><label>ΝΕΟ PASSWORD</label><input type="password" id="set-new-password" placeholder="Νέο password"></div>
           <button class="btn-save-settings" onclick="savePassword()">💾 Αλλαγή</button>
         </div>
+        <div class="settings-box">
+          <h3>🚪 Αποσύνδεση</h3>
+          <button class="btn-save-settings" style="background:rgba(224,92,75,0.8)" onclick="doLogout()">🚪 Αποσύνδεση</button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- BOTTOM NAV (mobile) -->
+  <div class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <div class="bn-item active" id="bn-dashboard" onclick="setNavMobile('dashboard',this)">
+        <div class="bn-icon">📊</div>
+        <div class="bn-label">Dashboard</div>
+      </div>
+      <div class="bn-item" id="bn-employees" onclick="setNavMobile('employees',this)">
+        <div class="bn-icon">👥</div>
+        <div class="bn-label">Εργαζόμενοι</div>
+      </div>
+      <div class="bn-item" id="bn-alerts" onclick="setNavMobile('alerts',this)">
+        <div class="bn-icon">⚠️</div>
+        <div class="bn-label">Ειδοποιήσεις</div>
+        <div class="bn-badge hidden" id="alert-badge-mobile">0</div>
+      </div>
+      <div class="bn-item" id="bn-settings" onclick="setNavMobile('settings',this)">
+        <div class="bn-icon">⚙️</div>
+        <div class="bn-label">Ρυθμίσεις</div>
+      </div>
+    </div>
+  </div>
+
 </div>
 
+<!-- TOAST -->
 <div class="sms-toast" id="sms-toast">
   <div class="toast-header">
     <div class="toast-app">💬</div>
@@ -239,6 +343,7 @@
   <div class="toast-body" id="toast-body"></div>
 </div>
 
+<!-- Modal Προσθήκης -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <h3>Νέος Εργαζόμενος</h3>
@@ -259,9 +364,10 @@
   </div>
 </div>
 
+<!-- Modal Επεξεργασίας -->
 <div class="modal-overlay" id="edit-modal-overlay">
   <div class="modal">
-    <h3>✏️ Επεξεργασία Εργαζόμενου</h3>
+    <h3>✏️ Επεξεργασία</h3>
     <p>Αλλαγή στοιχείων</p>
     <div class="modal-field"><label>ΟΝΟΜΑ</label><input type="text" id="edit-name" disabled style="opacity:0.5"></div>
     <div class="modal-field"><label>ΤΜΗΜΑ</label>
@@ -293,18 +399,17 @@ let editingEmpId = null;
 
 function updateClock() {
   const now = new Date();
-  document.getElementById('main-clock').textContent = now.toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
-  document.getElementById('today-day').textContent = now.toLocaleDateString('el-GR',{weekday:'long',day:'numeric',month:'long'});
+  const t = now.toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
+  const d = now.toLocaleDateString('el-GR',{weekday:'long',day:'numeric',month:'long'});
+  document.getElementById('main-clock').textContent = t;
+  document.getElementById('mobile-clock').textContent = t;
+  document.getElementById('today-day').textContent = d;
 }
 setInterval(updateClock, 1000);
 updateClock();
 
 async function sendWhatsApp(to, message) {
-  const response = await fetch(WORKER_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ to: to, message: message })
-  });
+  const response = await fetch(WORKER_URL, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({to,message}) });
   return response.json();
 }
 
@@ -313,21 +418,16 @@ async function simulateWA() {
   if (!phone) { alert('Βάλε αριθμό Μάστερ στις Ρυθμίσεις!'); return; }
   showToast('<strong>⏳ Αποστολή WhatsApp...</strong>');
   const result = await sendWhatsApp(phone, '✅ Test μήνυμα από ShiftGuard! Το σύστημα λειτουργεί!');
-  if (result.sid) {
-    showToast('<strong>✅ WhatsApp εστάλη στον Μάστερ!</strong>');
-  } else {
-    showToast('<strong>❌ Error: </strong>' + (result.message || 'Άγνωστο σφάλμα'));
-  }
+  showToast(result.sid ? '<strong>✅ WhatsApp εστάλη!</strong>' : '<strong>❌ Error: </strong>' + (result.message || 'Άγνωστο σφάλμα'));
 }
 
 async function doLogin() {
   const username = document.getElementById('login-username').value.trim();
   const password = document.getElementById('login-password').value.trim();
-  const { data, error } = await sb.from('hotels').select('*').eq('username', username).eq('password', password).single();
+  const { data, error } = await sb.from('hotels').select('*').eq('username',username).eq('password',password).single();
   if (error || !data) { document.getElementById('login-error').style.display = 'block'; return; }
   currentHotel = data;
-  unreadAlerts = 0;
-  alertsSent = {};
+  unreadAlerts = 0; alertsSent = {};
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('dashboard').style.display = 'flex';
   document.getElementById('hotel-name-display').textContent = '🏨 ' + data.name;
@@ -336,15 +436,10 @@ async function doLogin() {
   loadEmployees();
 }
 
-document.getElementById('login-password').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter') doLogin();
-});
+document.getElementById('login-password').addEventListener('keypress', function(e) { if(e.key==='Enter') doLogin(); });
 
 function doLogout() {
-  currentHotel = null;
-  employees = [];
-  unreadAlerts = 0;
-  alertsSent = {};
+  currentHotel = null; employees = []; unreadAlerts = 0; alertsSent = {};
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('dashboard').style.display = 'none';
   document.getElementById('login-username').value = '';
@@ -356,27 +451,32 @@ async function loadEmployees() {
   const { data, error } = await sb.from('employees').select('*').eq('hotel_id', currentHotel.id).order('department').order('name');
   if (error) { console.error(error); return; }
   employees = data.map(function(e) { return Object.assign({}, e, {status: e.status || 'missing'}); });
-  updateStats();
-  renderDepts();
+  updateStats(); renderDepts();
 }
 
 function groupByDept() {
-  return employees.reduce(function(g, e) { (g[e.department] = g[e.department]||[]).push(e); return g; }, {});
+  return employees.reduce(function(g,e){ (g[e.department]=g[e.department]||[]).push(e); return g; }, {});
 }
 
 function updateStats() {
   const total = employees.length;
-  const missing = employees.filter(function(e) { return e.status === 'missing'; }).length;
-  const ok = employees.filter(function(e) { return e.status === 'ok'; }).length;
+  const missing = employees.filter(function(e){return e.status==='missing';}).length;
+  const ok = employees.filter(function(e){return e.status==='ok';}).length;
   const depts = Object.keys(groupByDept()).length;
   document.getElementById('stat-total').textContent = total;
   document.getElementById('stat-ok').textContent = ok;
   document.getElementById('stat-missing').textContent = missing;
   document.getElementById('stat-depts').textContent = depts;
   document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
-  var badge = document.getElementById('alert-badge');
-  if (unreadAlerts > 0) { badge.textContent = unreadAlerts; badge.classList.remove('hidden'); }
-  else { badge.classList.add('hidden'); }
+  var bs = document.getElementById('alert-badge-sidebar');
+  var bm = document.getElementById('alert-badge-mobile');
+  if (unreadAlerts > 0) {
+    bs.textContent = unreadAlerts; bs.classList.remove('hidden');
+    bm.textContent = unreadAlerts; bm.classList.remove('hidden');
+  } else {
+    bs.classList.add('hidden');
+    bm.classList.add('hidden');
+  }
 }
 
 function renderDepts() {
@@ -390,9 +490,9 @@ function renderDepts() {
     card.className = 'dept-card';
     card.innerHTML = '<div class="dept-header"><div class="dept-name">' + icon + ' ' + dept + '</div><span class="dept-count">' + emps.length + ' άτομα</span></div><div class="dept-body">' +
       emps.map(function(emp) {
-        const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
-        const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
-        return '<div class="emp-row"><div class="emp-info"><div class="emp-name">' + emp.name + '</div><div class="emp-shift">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-edit" onclick="openEditModal(' + emp.employees + ')">✏️</button><button class="btn-delete" onclick="deleteEmployee(' + emp.employees + ',\'' + emp.name + '\')">🗑️</button></div>';
+        const sc = emp.status==='ok'?'ok':emp.status==='done'?'done':'missing';
+        const si = emp.status==='ok'?'✓':emp.status==='done'?'🏁':'!';
+        return '<div class="emp-row"><div class="emp-info"><div class="emp-name">' + emp.name + '</div><div class="emp-shift">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + sc + '">' + si + '</div><button class="btn-edit" onclick="openEditModal(' + emp.employees + ')">✏️</button><button class="btn-delete" onclick="deleteEmployee(' + emp.employees + ',\'' + emp.name + '\')">🗑️</button></div>';
       }).join('') + '</div>';
     grid.appendChild(card);
   });
@@ -409,16 +509,16 @@ function renderEmployeesFull() {
     s.style.marginBottom = '20px';
     s.innerHTML = '<div style="font-size:13px;color:var(--text-muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px">' + icon + ' ' + dept + '</div><div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:14px;overflow:hidden">' +
       emps.map(function(emp, i) {
-        const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
-        const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
-        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--white);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-edit" onclick="openEditModal(' + emp.employees + ')">✏️</button><button class="btn-delete" onclick="deleteEmployee(' + emp.employees + ',\'' + emp.name + '\')">🗑️</button></div>';
+        const sc = emp.status==='ok'?'ok':emp.status==='done'?'done':'missing';
+        const si = emp.status==='ok'?'✓':emp.status==='done'?'🏁':'!';
+        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--white);font-weight:600;flex-shrink:0">' + emp.name.charAt(0) + '</div><div style="flex:1;min-width:0"><div style="font-size:14px;color:var(--cream);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + sc + '">' + si + '</div><button class="btn-edit" onclick="openEditModal(' + emp.employees + ')">✏️</button><button class="btn-delete" onclick="deleteEmployee(' + emp.employees + ',\'' + emp.name + '\')">🗑️</button></div>';
       }).join('') + '</div>';
     list.appendChild(s);
   });
 }
 
 function openEditModal(empId) {
-  const emp = employees.find(function(e) { return e.employees === empId; });
+  const emp = employees.find(function(e){return e.employees===empId;});
   if (!emp) return;
   editingEmpId = empId;
   document.getElementById('edit-name').value = emp.name;
@@ -428,10 +528,7 @@ function openEditModal(empId) {
   document.getElementById('edit-modal-overlay').classList.add('show');
 }
 
-function closeEditModal() {
-  document.getElementById('edit-modal-overlay').classList.remove('show');
-  editingEmpId = null;
-}
+function closeEditModal() { document.getElementById('edit-modal-overlay').classList.remove('show'); editingEmpId = null; }
 
 async function saveEmployee() {
   var dept = document.getElementById('edit-dept').value;
@@ -440,12 +537,12 @@ async function saveEmployee() {
   if (!start.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα έναρξης σε μορφή ΩΩ:ΛΛ π.χ. 07:00'); return; }
   if (!end.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα λήξης σε μορφή ΩΩ:ΛΛ π.χ. 15:30'); return; }
   var btn = document.getElementById('edit-save-btn');
-  btn.textContent = '⏳ Αποθήκευση...'; btn.disabled = true;
-  var result = await sb.from('employees').update({ department: dept, shift_start: start, shift_end: end }).eq('employees', editingEmpId);
+  btn.textContent = '⏳...'; btn.disabled = true;
+  var result = await sb.from('employees').update({department:dept,shift_start:start,shift_end:end}).eq('employees',editingEmpId);
   btn.textContent = '💾 Αποθήκευση'; btn.disabled = false;
   if (result.error) { alert('❌ ' + result.error.message); return; }
-  var emp = employees.find(function(e) { return e.employees === editingEmpId; });
-  if (emp) { emp.department = dept; emp.shift_start = start; emp.shift_end = end; }
+  var emp = employees.find(function(e){return e.employees===editingEmpId;});
+  if (emp) { emp.department=dept; emp.shift_start=start; emp.shift_end=end; }
   updateStats(); renderDepts(); renderEmployeesFull(); closeEditModal();
   showToast('✅ Στοιχεία αποθηκεύτηκαν!');
 }
@@ -454,7 +551,7 @@ async function deleteEmployee(empId, name) {
   if (!confirm('Διαγραφή ' + name + ';')) return;
   var result = await sb.from('employees').delete().eq('employees', empId);
   if (result.error) { alert('❌ ' + result.error.message); return; }
-  employees = employees.filter(function(e) { return e.employees !== empId; });
+  employees = employees.filter(function(e){return e.employees!==empId;});
   updateStats(); renderDepts(); renderEmployeesFull();
   showToast('🗑️ <strong>' + name + '</strong> διαγράφηκε!');
 }
@@ -467,26 +564,38 @@ function renderSchedule() {
 async function renderAlerts() {
   const el = document.getElementById('alerts-view');
   el.innerHTML = '<div class="loading">Φόρτωση...</div>';
-  const { data, error } = await sb.from('alerts').select('*').eq('hotel_id', currentHotel.id).order('created_at', { ascending: false }).limit(50);
+  const { data, error } = await sb.from('alerts').select('*').eq('hotel_id', currentHotel.id).order('created_at',{ascending:false}).limit(50);
   if (error || !data || !data.length) { el.innerHTML = '<div class="loading">✅ Δεν υπάρχουν ειδοποιήσεις</div>'; return; }
   el.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px">' + data.map(function(alert) {
     const dt = new Date(alert.created_at);
-    const dateStr = dt.toLocaleDateString('el-GR', {weekday:'short', day:'numeric', month:'short'});
-    const timeStr = dt.toLocaleTimeString('el-GR', {hour:'2-digit', minute:'2-digit'});
-    return '<div style="background:rgba(232,38,26,0.06);border:1px solid rgba(232,38,26,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1"><div style="color:var(--cream);font-weight:500">' + alert.employee_name + '</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px">' + alert.department + ' • ' + alert.shift_time + ' • Δεν δήλωσε ' + alert.type + '</div><div style="font-size:11px;color:var(--gold);margin-top:4px">🕐 ' + dateStr + ' ' + timeStr + '</div></div><div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div></div>';
+    const dateStr = dt.toLocaleDateString('el-GR',{weekday:'short',day:'numeric',month:'short'});
+    const timeStr = dt.toLocaleTimeString('el-GR',{hour:'2-digit',minute:'2-digit'});
+    return '<div style="background:rgba(232,38,26,0.06);border:1px solid rgba(232,38,26,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1;min-width:0"><div style="color:var(--cream);font-weight:500">' + alert.employee_name + '</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px">' + alert.department + ' • ' + alert.shift_time + ' • Δεν δήλωσε ' + alert.type + '</div><div style="font-size:11px;color:var(--gold);margin-top:4px">🕐 ' + dateStr + ' ' + timeStr + '</div></div></div>';
   }).join('') + '</div>';
 }
 
 function setNav(el, view) {
-  document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function(n){n.classList.remove('active');});
   el.classList.add('active');
-  document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+  switchView(view);
+}
+
+function setNavMobile(view, el) {
+  document.querySelectorAll('.bn-item').forEach(function(n){n.classList.remove('active');});
+  el.classList.add('active');
+  switchView(view);
+  if (view==='alerts') { unreadAlerts=0; document.getElementById('alert-badge-mobile').classList.add('hidden'); document.getElementById('alert-badge-sidebar').classList.add('hidden'); }
+}
+
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
   document.getElementById('view-'+view).classList.add('active');
   var titles = {dashboard:'Dashboard',employees:'Εργαζόμενοι',schedule:'Πρόγραμμα',alerts:'Ειδοποιήσεις',settings:'Ρυθμίσεις'};
   document.getElementById('page-title').textContent = titles[view];
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
-  if (view==='alerts') { unreadAlerts = 0; document.getElementById('alert-badge').classList.add('hidden'); renderAlerts(); }
+  if (view==='alerts') { unreadAlerts=0; document.getElementById('alert-badge-sidebar').classList.add('hidden'); renderAlerts(); }
+  window.scrollTo(0,0);
 }
 
 function showToast(msg) {
@@ -495,7 +604,7 @@ function showToast(msg) {
   document.getElementById('toast-body').innerHTML = msg;
   var t = document.getElementById('sms-toast');
   t.classList.add('show');
-  setTimeout(function(){ t.classList.remove('show'); }, 4000);
+  setTimeout(function(){t.classList.remove('show');}, 4000);
 }
 
 function openAddModal() { document.getElementById('modal-overlay').classList.add('show'); }
@@ -510,12 +619,12 @@ async function addEmployee() {
   if (!start.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα έναρξης σε μορφή ΩΩ:ΛΛ π.χ. 07:00'); return; }
   if (!end.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα λήξης σε μορφή ΩΩ:ΛΛ π.χ. 15:30'); return; }
   var btn = document.getElementById('save-btn');
-  btn.textContent = '⏳ Αποθήκευση...'; btn.disabled = true;
-  var result = await sb.from('employees').insert([{ name: name, department: dept, shift_start: start, shift_end: end, status: 'missing', hotel_id: currentHotel.id }]).select();
+  btn.textContent = '⏳...'; btn.disabled = true;
+  var result = await sb.from('employees').insert([{name,department:dept,shift_start:start,shift_end:end,status:'missing',hotel_id:currentHotel.id}]).select();
   btn.textContent = '💾 Αποθήκευση'; btn.disabled = false;
   if (result.error) { alert('❌ ' + result.error.message); return; }
-  employees.push(Object.assign({}, result.data[0], {status: 'missing'}));
-  employees.sort(function(a,b){ return a.department.localeCompare(b.department) || a.name.localeCompare(b.name); });
+  employees.push(Object.assign({},result.data[0],{status:'missing'}));
+  employees.sort(function(a,b){return a.department.localeCompare(b.department)||a.name.localeCompare(b.name);});
   updateStats(); renderDepts(); closeModal();
   document.getElementById('new-name').value = '';
   document.getElementById('new-start').value = '';
@@ -527,9 +636,9 @@ async function saveSettings() {
   var name = document.getElementById('set-hotel-name').value.trim();
   var phone = document.getElementById('set-master-phone').value.trim();
   if (!name) { alert('Βάλε όνομα!'); return; }
-  var result = await sb.from('hotels').update({ name: name, master_phone: phone }).eq('id', currentHotel.id);
+  var result = await sb.from('hotels').update({name,master_phone:phone}).eq('id',currentHotel.id);
   if (result.error) { alert('❌ ' + result.error.message); return; }
-  currentHotel.name = name; currentHotel.master_phone = phone;
+  currentHotel.name=name; currentHotel.master_phone=phone;
   document.getElementById('hotel-name-display').textContent = '🏨 ' + name;
   showToast('✅ Ρυθμίσεις αποθηκεύτηκαν!');
 }
@@ -537,7 +646,7 @@ async function saveSettings() {
 async function savePassword() {
   var newPass = document.getElementById('set-new-password').value.trim();
   if (!newPass) { alert('Βάλε νέο password!'); return; }
-  var result = await sb.from('hotels').update({ password: newPass }).eq('id', currentHotel.id);
+  var result = await sb.from('hotels').update({password:newPass}).eq('id',currentHotel.id);
   if (result.error) { alert('❌ ' + result.error.message); return; }
   document.getElementById('set-new-password').value = '';
   showToast('✅ Password άλλαξε!');
@@ -546,48 +655,37 @@ async function savePassword() {
 async function sendAlert(name, dept, time, type) {
   const phone = currentHotel ? currentHotel.master_phone : '';
   if (!phone) return;
-  const alertKey = name + '_' + type + '_' + time;
+  const alertKey = name+'_'+type+'_'+time;
   if (alertsSent[alertKey]) return;
   alertsSent[alertKey] = true;
-  await sb.from('alerts').insert([{ employee_name: name, department: dept, shift_time: time, type: type, hotel_id: currentHotel.id }]);
+  await sb.from('alerts').insert([{employee_name:name,department:dept,shift_time:time,type,hotel_id:currentHotel.id}]);
   unreadAlerts++;
-  var badge = document.getElementById('alert-badge');
-  badge.textContent = unreadAlerts;
-  badge.classList.remove('hidden');
-  const hotelName = currentHotel.name.toUpperCase();
-  const msg = hotelName + ': Ο/Η ' + name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '. Καθυστέρηση 10 λεπτά. — ShiftGuard';
+  document.getElementById('alert-badge-sidebar').textContent = unreadAlerts;
+  document.getElementById('alert-badge-sidebar').classList.remove('hidden');
+  document.getElementById('alert-badge-mobile').textContent = unreadAlerts;
+  document.getElementById('alert-badge-mobile').classList.remove('hidden');
+  const msg = currentHotel.name.toUpperCase() + ': Ο/Η ' + name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '. Καθυστέρηση 10 λεπτά. — ShiftGuard';
   await sendWhatsApp(phone, msg);
   showToast('⚠️ <strong>' + name + '</strong> δεν δήλωσε ' + type + '!');
 }
 
 function checkShifts() {
   const now = new Date();
-  const currentTime = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+  const currentTime = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
   employees.forEach(function(emp) {
-    const startPlus10 = addMinutes(emp.shift_start, 10);
-    const endPlus10 = addMinutes(emp.shift_end, 10);
-    if (currentTime === startPlus10 && emp.status === 'missing') sendAlert(emp.name, emp.department, emp.shift_start, 'έναρξη');
-    if (currentTime === endPlus10 && emp.status === 'ok') sendAlert(emp.name, emp.department, emp.shift_end, 'λήξη');
+    if (currentTime===addMinutes(emp.shift_start,10) && emp.status==='missing') sendAlert(emp.name,emp.department,emp.shift_start,'έναρξη');
+    if (currentTime===addMinutes(emp.shift_end,10) && emp.status==='ok') sendAlert(emp.name,emp.department,emp.shift_end,'λήξη');
   });
 }
 
 function addMinutes(time, mins) {
-  const parts = time.split(':');
-  const total = parseInt(parts[0]) * 60 + parseInt(parts[1]) + mins;
-  return Math.floor(total/60)%24 + ':' + (total%60).toString().padStart(2,'0');
-  // fix: pad hours too
+  const p = time.split(':');
+  const total = parseInt(p[0])*60+parseInt(p[1])+mins;
+  return (Math.floor(total/60)%24).toString().padStart(2,'0')+':'+(total%60).toString().padStart(2,'0');
 }
 
-function addMinutes(time, mins) {
-  const parts = time.split(':');
-  const total = parseInt(parts[0]) * 60 + parseInt(parts[1]) + mins;
-  const h = Math.floor(total/60) % 24;
-  const m = total % 60;
-  return h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0');
-}
-
-setInterval(function() { if (currentHotel) loadEmployees(); }, 30000);
-setInterval(function() { if (currentHotel) checkShifts(); }, 60000);
+setInterval(function(){if(currentHotel)loadEmployees();}, 30000);
+setInterval(function(){if(currentHotel)checkShifts();}, 60000);
 </script>
 </body>
 </html>
