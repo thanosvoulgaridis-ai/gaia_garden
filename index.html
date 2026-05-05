@@ -3,47 +3,47 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ShiftKos — Gaia Garden</title>
+<title>ShiftGuard — Gaia Garden</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --navy: #0a1628; --navy-mid: #112240; --navy-light: #1d3461;
-    --gold: #c9a84c; --gold-light: #e8c97a; --cream: #f5f0e8;
+    --navy: #0f1c3f; --navy-mid: #1B2B6B; --navy-light: #243590;
+    --gold: #E8261A; --gold-light: #ff4438; --cream: #f5f0e8;
     --white: #ffffff; --alert: #e05c4b; --success: #4caf7d;
     --warning: #f0a500; --text-muted: #8899aa; --sidebar-w: 240px;
   }
   body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
   html { height: 100%; }
   .login-screen { position: fixed; inset: 0; background: var(--navy); display: flex; align-items: center; justify-content: center; z-index: 999; }
-  .login-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(201,168,76,0.2); border-radius: 24px; padding: 48px; width: 400px; }
-  .login-logo { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--gold); text-align: center; margin-bottom: 4px; }
-  .login-logo span { color: var(--white); }
+  .login-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(232,38,26,0.25); border-radius: 24px; padding: 48px; width: 400px; }
+  .login-logo { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--white); text-align: center; margin-bottom: 4px; }
+  .login-logo span { color: var(--gold); }
   .login-sub { font-size: 13px; color: var(--text-muted); text-align: center; margin-bottom: 40px; }
   .login-field { margin-bottom: 16px; }
   .login-field label { display: block; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
   .login-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 12px 16px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; transition: border 0.2s; }
-  .login-field input:focus { border-color: rgba(201,168,76,0.4); }
-  .login-btn { width: 100%; background: linear-gradient(135deg, var(--gold), #8a6020); border: none; border-radius: 10px; padding: 14px; color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 24px; transition: all 0.2s; }
-  .login-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+  .login-field input:focus { border-color: rgba(232,38,26,0.5); }
+  .login-btn { width: 100%; background: var(--gold); border: none; border-radius: 10px; padding: 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 24px; transition: all 0.2s; }
+  .login-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,38,26,0.35); }
   .login-error { color: var(--alert); font-size: 13px; text-align: center; margin-top: 16px; display: none; }
   .dashboard { display: none; width: 100%; height: 100vh; }
-  .sidebar { width: var(--sidebar-w); background: rgba(7,15,30,0.95); border-right: 1px solid rgba(201,168,76,0.1); display: flex; flex-direction: column; padding: 28px 0; flex-shrink: 0; z-index: 10; height: 100vh; overflow-y: auto; }
+  .sidebar { width: var(--sidebar-w); background: rgba(7,15,35,0.97); border-right: 1px solid rgba(232,38,26,0.12); display: flex; flex-direction: column; padding: 28px 0; flex-shrink: 0; z-index: 10; height: 100vh; overflow-y: auto; }
   .sidebar-logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
-  .sidebar-logo .logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--gold); }
-  .sidebar-logo .logo-text span { color: var(--white); }
+  .sidebar-logo .logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--white); }
+  .sidebar-logo .logo-text span { color: var(--gold); }
   .sidebar-logo .hotel-name { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
   .nav-section { padding: 0 12px; margin-bottom: 8px; }
   .nav-label { font-size: 10px; letter-spacing: 2px; color: rgba(136,153,170,0.5); text-transform: uppercase; padding: 0 12px; margin-bottom: 6px; }
   .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; cursor: pointer; font-size: 14px; color: var(--text-muted); transition: all 0.2s; margin-bottom: 2px; }
   .nav-item:hover { background: rgba(255,255,255,0.04); color: var(--cream); }
-  .nav-item.active { background: rgba(201,168,76,0.1); color: var(--gold); }
+  .nav-item.active { background: rgba(232,38,26,0.12); color: var(--gold); }
   .nav-item .icon { width: 18px; text-align: center; font-size: 15px; }
   .nav-badge { margin-left: auto; background: var(--alert); color: white; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 10px; }
   .nav-badge.hidden { display: none; }
   .sidebar-footer { margin-top: auto; padding: 20px 24px 0; border-top: 1px solid rgba(255,255,255,0.05); }
-  .master-card { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); border-radius: 12px; padding: 12px; }
+  .master-card { background: rgba(232,38,26,0.08); border: 1px solid rgba(232,38,26,0.2); border-radius: 12px; padding: 12px; }
   .master-label { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
   .master-name { font-size: 13px; color: var(--gold); font-weight: 500; }
   .master-status { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 11px; color: var(--success); }
@@ -51,11 +51,11 @@
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .logout-btn { width: 100%; margin-top: 12px; background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.2); border-radius: 8px; padding: 8px; color: var(--alert); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
   .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; height: 100vh; }
-  .topbar { background: rgba(7,15,30,0.8); border-bottom: 1px solid rgba(255,255,255,0.05); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 5; }
+  .topbar { background: rgba(15,28,63,0.9); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 5; }
   .topbar-left h1 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--cream); }
   .topbar-left p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
   .topbar-right { display: flex; align-items: center; gap: 16px; }
-  .clock-badge { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 8px 16px; font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); letter-spacing: 2px; }
+  .clock-badge { background: rgba(232,38,26,0.12); border: 1px solid rgba(232,38,26,0.25); border-radius: 10px; padding: 8px 16px; font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); letter-spacing: 2px; }
   .day-badge { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 14px; font-size: 12px; color: var(--text-muted); }
   .content { padding: 28px 32px; }
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
@@ -63,20 +63,21 @@
   .stat-icon { font-size: 22px; margin-bottom: 12px; }
   .stat-val { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--cream); }
   .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
-  .stat-card.alert-card { border-color: rgba(224,92,75,0.3); background: rgba(224,92,75,0.05); }
-  .stat-card.alert-card .stat-val { color: var(--alert); }
+  .stat-card.alert-card { border-color: rgba(232,38,26,0.3); background: rgba(232,38,26,0.06); }
+  .stat-card.alert-card .stat-val { color: var(--gold); }
   .stat-card.success-card { border-color: rgba(76,175,125,0.3); background: rgba(76,175,125,0.05); }
   .stat-card.success-card .stat-val { color: var(--success); }
   .section { margin-bottom: 28px; }
   .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .section-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--cream); }
   .section-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-  .btn-small { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); border-radius: 8px; padding: 7px 14px; color: var(--gold); font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .btn-small { background: rgba(232,38,26,0.12); border: 1px solid rgba(232,38,26,0.35); border-radius: 8px; padding: 7px 14px; color: var(--gold); font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+  .btn-small:hover { background: rgba(232,38,26,0.22); }
   .dept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
   .dept-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; }
   .dept-header { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
   .dept-name { font-size: 14px; font-weight: 600; color: var(--cream); }
-  .dept-count { font-size: 11px; background: rgba(201,168,76,0.15); color: var(--gold); padding: 3px 8px; border-radius: 6px; }
+  .dept-count { font-size: 11px; background: rgba(232,38,26,0.15); color: var(--gold); padding: 3px 8px; border-radius: 6px; }
   .dept-body { padding: 12px 18px; }
   .emp-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 8px; }
   .emp-row:last-child { border-bottom: none; }
@@ -85,12 +86,12 @@
   .emp-shift { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
   .emp-status { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
   .emp-status.ok { background: rgba(76,175,125,0.15); border: 1px solid rgba(76,175,125,0.3); color: var(--success); }
-  .emp-status.missing { background: rgba(224,92,75,0.15); border: 1px solid rgba(224,92,75,0.3); color: var(--alert); }
+  .emp-status.missing { background: rgba(232,38,26,0.15); border: 1px solid rgba(232,38,26,0.3); color: var(--gold); }
   .emp-status.done { background: rgba(136,153,170,0.15); border: 1px solid rgba(136,153,170,0.3); color: var(--text-muted); }
   .btn-delete { background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.3); border-radius: 6px; padding: 4px 8px; color: var(--alert); font-size: 11px; cursor: pointer; flex-shrink: 0; }
   .btn-delete:hover { background: rgba(224,92,75,0.25); }
-  .btn-edit { background: rgba(201,168,76,0.1); border: 1px solid rgba(201,168,76,0.3); border-radius: 6px; padding: 4px 8px; color: var(--gold); font-size: 11px; cursor: pointer; flex-shrink: 0; }
-  .btn-edit:hover { background: rgba(201,168,76,0.25); }
+  .btn-edit { background: rgba(232,38,26,0.1); border: 1px solid rgba(232,38,26,0.3); border-radius: 6px; padding: 4px 8px; color: var(--gold); font-size: 11px; cursor: pointer; flex-shrink: 0; }
+  .btn-edit:hover { background: rgba(232,38,26,0.25); }
   .sms-toast { position: fixed; bottom: 24px; right: 24px; width: 340px; background: #111827; border-radius: 18px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); z-index: 100; transform: translateY(120px); opacity: 0; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.08); }
   .sms-toast.show { transform: translateY(0); opacity: 1; }
   .toast-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -100,7 +101,7 @@
   .toast-body { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 12px; }
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
   .modal-overlay.show { opacity: 1; pointer-events: all; }
-  .modal { background: #0d1f3c; border: 1px solid rgba(201,168,76,0.2); border-radius: 20px; padding: 32px; width: 440px; }
+  .modal { background: #0d1f3c; border: 1px solid rgba(232,38,26,0.2); border-radius: 20px; padding: 32px; width: 440px; }
   .modal h3 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--cream); margin-bottom: 6px; }
   .modal p { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
   .modal-field { margin-bottom: 16px; }
@@ -108,7 +109,8 @@
   .modal-field input, .modal-field select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
   .btn-cancel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 20px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; }
-  .btn-save { background: linear-gradient(135deg, var(--gold), #8a6020); border: none; border-radius: 10px; padding: 10px 24px; color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-save { background: var(--gold); border: none; border-radius: 10px; padding: 10px 24px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-save:hover { background: var(--gold-light); }
   .view { display: none; }
   .view.active { display: block; }
   .db-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; background: rgba(76,175,125,0.12); border: 1px solid rgba(76,175,125,0.25); border-radius: 6px; padding: 2px 8px; color: var(--success); margin-left: 8px; vertical-align: middle; }
@@ -118,14 +120,15 @@
   .settings-field { margin-bottom: 16px; }
   .settings-field label { display: block; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
   .settings-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
-  .btn-save-settings { background: linear-gradient(135deg, var(--gold), #8a6020); border: none; border-radius: 10px; padding: 10px 24px; color: var(--navy); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+  .btn-save-settings { background: var(--gold); border: none; border-radius: 10px; padding: 10px 24px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; }
+  .btn-save-settings:hover { background: var(--gold-light); }
 </style>
 </head>
 <body>
 
 <div class="login-screen" id="login-screen">
   <div class="login-box">
-    <div class="login-logo">Shift<span>Kos</span></div>
+    <div class="login-logo">Shift<span>Guard</span></div>
     <div class="login-sub">Σύστημα Διαχείρισης Βαρδιών</div>
     <div class="login-field"><label>USERNAME</label><input type="text" id="login-username" placeholder="π.χ. gaiagarden"></div>
     <div class="login-field"><label>PASSWORD</label><input type="password" id="login-password" placeholder="••••••••"></div>
@@ -137,7 +140,7 @@
 <div class="dashboard" id="dashboard">
   <div class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-text">Shift<span>Kos</span></div>
+      <div class="logo-text">Shift<span>Guard</span></div>
       <div class="hotel-name" id="hotel-name-display">🏨 Hotel</div>
     </div>
     <div class="nav-section">
@@ -230,13 +233,12 @@
 <div class="sms-toast" id="sms-toast">
   <div class="toast-header">
     <div class="toast-app">💬</div>
-    <div><div class="toast-sender">ShiftKos</div></div>
+    <div><div class="toast-sender">ShiftGuard</div></div>
     <div class="toast-time" id="toast-time"></div>
   </div>
   <div class="toast-body" id="toast-body"></div>
 </div>
 
-<!-- Modal Προσθήκης -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal">
     <h3>Νέος Εργαζόμενος</h3>
@@ -248,12 +250,8 @@
         <option>Υποδοχή</option><option>Οροφοκομία</option><option>Συντήρηση</option><option>Κήπος</option>
       </select>
     </div>
-    <div class="modal-field"><label>ΩΡΑ ΕΝΑΡΞΗΣ (π.χ. 07:00)</label>
-      <input type="text" id="new-start" placeholder="07:00" maxlength="5">
-    </div>
-    <div class="modal-field"><label>ΩΡΑ ΛΗΞΗΣ (π.χ. 15:30)</label>
-      <input type="text" id="new-end" placeholder="15:30" maxlength="5">
-    </div>
+    <div class="modal-field"><label>ΩΡΑ ΕΝΑΡΞΗΣ (π.χ. 07:00)</label><input type="text" id="new-start" placeholder="07:00" maxlength="5"></div>
+    <div class="modal-field"><label>ΩΡΑ ΛΗΞΗΣ (π.χ. 15:30)</label><input type="text" id="new-end" placeholder="15:30" maxlength="5"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeModal()">Άκυρο</button>
       <button class="btn-save" id="save-btn" onclick="addEmployee()">💾 Αποθήκευση</button>
@@ -261,7 +259,6 @@
   </div>
 </div>
 
-<!-- Modal Επεξεργασίας -->
 <div class="modal-overlay" id="edit-modal-overlay">
   <div class="modal">
     <h3>✏️ Επεξεργασία Εργαζόμενου</h3>
@@ -273,12 +270,8 @@
         <option>Υποδοχή</option><option>Οροφοκομία</option><option>Συντήρηση</option><option>Κήπος</option>
       </select>
     </div>
-    <div class="modal-field"><label>ΩΡΑ ΕΝΑΡΞΗΣ (π.χ. 07:00)</label>
-      <input type="text" id="edit-start" placeholder="07:00" maxlength="5">
-    </div>
-    <div class="modal-field"><label>ΩΡΑ ΛΗΞΗΣ (π.χ. 15:30)</label>
-      <input type="text" id="edit-end" placeholder="15:30" maxlength="5">
-    </div>
+    <div class="modal-field"><label>ΩΡΑ ΕΝΑΡΞΗΣ (π.χ. 07:00)</label><input type="text" id="edit-start" placeholder="07:00" maxlength="5"></div>
+    <div class="modal-field"><label>ΩΡΑ ΛΗΞΗΣ (π.χ. 15:30)</label><input type="text" id="edit-end" placeholder="15:30" maxlength="5"></div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeEditModal()">Άκυρο</button>
       <button class="btn-save" id="edit-save-btn" onclick="saveEmployee()">💾 Αποθήκευση</button>
@@ -319,7 +312,7 @@ async function simulateWA() {
   const phone = currentHotel ? currentHotel.master_phone : '';
   if (!phone) { alert('Βάλε αριθμό Μάστερ στις Ρυθμίσεις!'); return; }
   showToast('<strong>⏳ Αποστολή WhatsApp...</strong>');
-  const result = await sendWhatsApp(phone, '✅ Test μήνυμα από ShiftKos! Το σύστημα λειτουργεί!');
+  const result = await sendWhatsApp(phone, '✅ Test μήνυμα από ShiftGuard! Το σύστημα λειτουργεί!');
   if (result.sid) {
     showToast('<strong>✅ WhatsApp εστάλη στον Μάστερ!</strong>');
   } else {
@@ -382,12 +375,8 @@ function updateStats() {
   document.getElementById('stat-depts').textContent = depts;
   document.getElementById('emp-subtitle').textContent = total + ' εργαζόμενοι — ' + depts + ' τμήματα';
   var badge = document.getElementById('alert-badge');
-  if (unreadAlerts > 0) {
-    badge.textContent = unreadAlerts;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
+  if (unreadAlerts > 0) { badge.textContent = unreadAlerts; badge.classList.remove('hidden'); }
+  else { badge.classList.add('hidden'); }
 }
 
 function renderDepts() {
@@ -395,8 +384,7 @@ function renderDepts() {
   const grouped = groupByDept();
   grid.innerHTML = '';
   Object.entries(grouped).forEach(function(entry) {
-    const dept = entry[0];
-    const emps = entry[1];
+    const dept = entry[0]; const emps = entry[1];
     const icon = ICONS[dept] || '🏢';
     const card = document.createElement('div');
     card.className = 'dept-card';
@@ -415,8 +403,7 @@ function renderEmployeesFull() {
   const grouped = groupByDept();
   list.innerHTML = '';
   Object.entries(grouped).forEach(function(entry) {
-    const dept = entry[0];
-    const emps = entry[1];
+    const dept = entry[0]; const emps = entry[1];
     const icon = ICONS[dept] || '🏢';
     const s = document.createElement('div');
     s.style.marginBottom = '20px';
@@ -424,7 +411,7 @@ function renderEmployeesFull() {
       emps.map(function(emp, i) {
         const statusClass = emp.status === 'ok' ? 'ok' : emp.status === 'done' ? 'done' : 'missing';
         const statusIcon = emp.status === 'ok' ? '✓' : emp.status === 'done' ? '🏁' : '!';
-        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--navy);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-edit" onclick="openEditModal(' + emp.employees + ')">✏️</button><button class="btn-delete" onclick="deleteEmployee(' + emp.employees + ',\'' + emp.name + '\')">🗑️</button></div>';
+        return '<div style="display:flex;align-items:center;gap:14px;padding:14px 18px;' + (i<emps.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'') + '"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--navy-light),var(--gold));display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--white);font-weight:600">' + emp.name.charAt(0) + '</div><div style="flex:1"><div style="font-size:14px;color:var(--cream)">' + emp.name + '</div><div style="font-size:12px;color:var(--text-muted)">🕐 ' + emp.shift_start + '–' + emp.shift_end + '</div></div><div class="emp-status ' + statusClass + '">' + statusIcon + '</div><button class="btn-edit" onclick="openEditModal(' + emp.employees + ')">✏️</button><button class="btn-delete" onclick="deleteEmployee(' + emp.employees + ',\'' + emp.name + '\')">🗑️</button></div>';
       }).join('') + '</div>';
     list.appendChild(s);
   });
@@ -453,18 +440,13 @@ async function saveEmployee() {
   if (!start.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα έναρξης σε μορφή ΩΩ:ΛΛ π.χ. 07:00'); return; }
   if (!end.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα λήξης σε μορφή ΩΩ:ΛΛ π.χ. 15:30'); return; }
   var btn = document.getElementById('edit-save-btn');
-  btn.textContent = '⏳ Αποθήκευση...';
-  btn.disabled = true;
+  btn.textContent = '⏳ Αποθήκευση...'; btn.disabled = true;
   var result = await sb.from('employees').update({ department: dept, shift_start: start, shift_end: end }).eq('employees', editingEmpId);
-  btn.textContent = '💾 Αποθήκευση';
-  btn.disabled = false;
+  btn.textContent = '💾 Αποθήκευση'; btn.disabled = false;
   if (result.error) { alert('❌ ' + result.error.message); return; }
   var emp = employees.find(function(e) { return e.employees === editingEmpId; });
   if (emp) { emp.department = dept; emp.shift_start = start; emp.shift_end = end; }
-  updateStats();
-  renderDepts();
-  renderEmployeesFull();
-  closeEditModal();
+  updateStats(); renderDepts(); renderEmployeesFull(); closeEditModal();
   showToast('✅ Στοιχεία αποθηκεύτηκαν!');
 }
 
@@ -473,9 +455,7 @@ async function deleteEmployee(empId, name) {
   var result = await sb.from('employees').delete().eq('employees', empId);
   if (result.error) { alert('❌ ' + result.error.message); return; }
   employees = employees.filter(function(e) { return e.employees !== empId; });
-  updateStats();
-  renderDepts();
-  renderEmployeesFull();
+  updateStats(); renderDepts(); renderEmployeesFull();
   showToast('🗑️ <strong>' + name + '</strong> διαγράφηκε!');
 }
 
@@ -488,15 +468,12 @@ async function renderAlerts() {
   const el = document.getElementById('alerts-view');
   el.innerHTML = '<div class="loading">Φόρτωση...</div>';
   const { data, error } = await sb.from('alerts').select('*').eq('hotel_id', currentHotel.id).order('created_at', { ascending: false }).limit(50);
-  if (error || !data || !data.length) {
-    el.innerHTML = '<div class="loading">✅ Δεν υπάρχουν ειδοποιήσεις</div>';
-    return;
-  }
+  if (error || !data || !data.length) { el.innerHTML = '<div class="loading">✅ Δεν υπάρχουν ειδοποιήσεις</div>'; return; }
   el.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px">' + data.map(function(alert) {
     const dt = new Date(alert.created_at);
     const dateStr = dt.toLocaleDateString('el-GR', {weekday:'short', day:'numeric', month:'short'});
     const timeStr = dt.toLocaleTimeString('el-GR', {hour:'2-digit', minute:'2-digit'});
-    return '<div style="background:rgba(224,92,75,0.06);border:1px solid rgba(224,92,75,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1"><div style="color:var(--cream);font-weight:500">' + alert.employee_name + '</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px">' + alert.department + ' • ' + alert.shift_time + ' • Δεν δήλωσε ' + alert.type + '</div><div style="font-size:11px;color:var(--gold);margin-top:4px">🕐 ' + dateStr + ' ' + timeStr + '</div></div><div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div></div>';
+    return '<div style="background:rgba(232,38,26,0.06);border:1px solid rgba(232,38,26,0.2);border-radius:12px;padding:16px 20px;display:flex;align-items:center;gap:14px"><div style="font-size:20px">🔴</div><div style="flex:1"><div style="color:var(--cream);font-weight:500">' + alert.employee_name + '</div><div style="font-size:12px;color:var(--text-muted);margin-top:3px">' + alert.department + ' • ' + alert.shift_time + ' • Δεν δήλωσε ' + alert.type + '</div><div style="font-size:11px;color:var(--gold);margin-top:4px">🕐 ' + dateStr + ' ' + timeStr + '</div></div><div style="font-size:11px;background:rgba(240,165,0,0.1);border:1px solid rgba(240,165,0,0.2);border-radius:6px;padding:4px 10px;color:var(--warning)">⏳ Εκκρεμεί</div></div>';
   }).join('') + '</div>';
 }
 
@@ -509,11 +486,7 @@ function setNav(el, view) {
   document.getElementById('page-title').textContent = titles[view];
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
-  if (view==='alerts') {
-    unreadAlerts = 0;
-    document.getElementById('alert-badge').classList.add('hidden');
-    renderAlerts();
-  }
+  if (view==='alerts') { unreadAlerts = 0; document.getElementById('alert-badge').classList.add('hidden'); renderAlerts(); }
 }
 
 function showToast(msg) {
@@ -537,17 +510,13 @@ async function addEmployee() {
   if (!start.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα έναρξης σε μορφή ΩΩ:ΛΛ π.χ. 07:00'); return; }
   if (!end.match(/^\d{2}:\d{2}$/)) { alert('Βάλε ώρα λήξης σε μορφή ΩΩ:ΛΛ π.χ. 15:30'); return; }
   var btn = document.getElementById('save-btn');
-  btn.textContent = '⏳ Αποθήκευση...';
-  btn.disabled = true;
+  btn.textContent = '⏳ Αποθήκευση...'; btn.disabled = true;
   var result = await sb.from('employees').insert([{ name: name, department: dept, shift_start: start, shift_end: end, status: 'missing', hotel_id: currentHotel.id }]).select();
-  btn.textContent = '💾 Αποθήκευση';
-  btn.disabled = false;
+  btn.textContent = '💾 Αποθήκευση'; btn.disabled = false;
   if (result.error) { alert('❌ ' + result.error.message); return; }
   employees.push(Object.assign({}, result.data[0], {status: 'missing'}));
   employees.sort(function(a,b){ return a.department.localeCompare(b.department) || a.name.localeCompare(b.name); });
-  updateStats();
-  renderDepts();
-  closeModal();
+  updateStats(); renderDepts(); closeModal();
   document.getElementById('new-name').value = '';
   document.getElementById('new-start').value = '';
   document.getElementById('new-end').value = '';
@@ -560,8 +529,7 @@ async function saveSettings() {
   if (!name) { alert('Βάλε όνομα!'); return; }
   var result = await sb.from('hotels').update({ name: name, master_phone: phone }).eq('id', currentHotel.id);
   if (result.error) { alert('❌ ' + result.error.message); return; }
-  currentHotel.name = name;
-  currentHotel.master_phone = phone;
+  currentHotel.name = name; currentHotel.master_phone = phone;
   document.getElementById('hotel-name-display').textContent = '🏨 ' + name;
   showToast('✅ Ρυθμίσεις αποθηκεύτηκαν!');
 }
@@ -581,19 +549,13 @@ async function sendAlert(name, dept, time, type) {
   const alertKey = name + '_' + type + '_' + time;
   if (alertsSent[alertKey]) return;
   alertsSent[alertKey] = true;
-  await sb.from('alerts').insert([{
-    employee_name: name,
-    department: dept,
-    shift_time: time,
-    type: type,
-    hotel_id: currentHotel.id
-  }]);
+  await sb.from('alerts').insert([{ employee_name: name, department: dept, shift_time: time, type: type, hotel_id: currentHotel.id }]);
   unreadAlerts++;
   var badge = document.getElementById('alert-badge');
   badge.textContent = unreadAlerts;
   badge.classList.remove('hidden');
   const hotelName = currentHotel.name.toUpperCase();
-  const msg = hotelName + ': Ο/Η ' + name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '. Καθυστέρηση 10 λεπτά. — ShiftKos';
+  const msg = hotelName + ': Ο/Η ' + name + ' (' + dept + ') δεν δήλωσε ' + type + ' βάρδιας ' + time + '. Καθυστέρηση 10 λεπτά. — ShiftGuard';
   await sendWhatsApp(phone, msg);
   showToast('⚠️ <strong>' + name + '</strong> δεν δήλωσε ' + type + '!');
 }
@@ -604,23 +566,24 @@ function checkShifts() {
   employees.forEach(function(emp) {
     const startPlus10 = addMinutes(emp.shift_start, 10);
     const endPlus10 = addMinutes(emp.shift_end, 10);
-    if (currentTime === startPlus10 && emp.status === 'missing') {
-      sendAlert(emp.name, emp.department, emp.shift_start, 'έναρξη');
-    }
-    if (currentTime === endPlus10 && emp.status === 'ok') {
-      sendAlert(emp.name, emp.department, emp.shift_end, 'λήξη');
-    }
+    if (currentTime === startPlus10 && emp.status === 'missing') sendAlert(emp.name, emp.department, emp.shift_start, 'έναρξη');
+    if (currentTime === endPlus10 && emp.status === 'ok') sendAlert(emp.name, emp.department, emp.shift_end, 'λήξη');
   });
 }
 
 function addMinutes(time, mins) {
   const parts = time.split(':');
-  const h = parseInt(parts[0]);
-  const m = parseInt(parts[1]);
-  const total = h * 60 + m + mins;
-  const newH = Math.floor(total / 60) % 24;
-  const newM = total % 60;
-  return newH.toString().padStart(2,'0') + ':' + newM.toString().padStart(2,'0');
+  const total = parseInt(parts[0]) * 60 + parseInt(parts[1]) + mins;
+  return Math.floor(total/60)%24 + ':' + (total%60).toString().padStart(2,'0');
+  // fix: pad hours too
+}
+
+function addMinutes(time, mins) {
+  const parts = time.split(':');
+  const total = parseInt(parts[0]) * 60 + parseInt(parts[1]) + mins;
+  const h = Math.floor(total/60) % 24;
+  const m = total % 60;
+  return h.toString().padStart(2,'0') + ':' + m.toString().padStart(2,'0');
 }
 
 setInterval(function() { if (currentHotel) loadEmployees(); }, 30000);
