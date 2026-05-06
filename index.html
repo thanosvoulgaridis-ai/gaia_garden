@@ -14,11 +14,8 @@
     --white: #ffffff; --alert: #e05c4b; --success: #4caf7d;
     --warning: #f0a500; --text-muted: #8899aa; --sidebar-w: 240px;
   }
-
   body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); height: 100vh; display: flex; overflow: hidden; }
   html { height: 100%; }
-
-  /* ── DESKTOP SIDEBAR ── */
   .sidebar { width: var(--sidebar-w); background: rgba(7,15,35,0.97); border-right: 1px solid rgba(232,38,26,0.12); display: flex; flex-direction: column; padding: 28px 0; flex-shrink: 0; z-index: 10; height: 100vh; overflow-y: auto; }
   .sidebar-logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
   .sidebar-logo .logo-text { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--white); }
@@ -40,8 +37,6 @@
   .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse 2s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
   .logout-btn { width: 100%; margin-top: 12px; background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.2); border-radius: 8px; padding: 8px; color: var(--alert); font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; }
-
-  /* ── MAIN ── */
   .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; height: 100vh; }
   .topbar { background: rgba(15,28,63,0.9); border-bottom: 1px solid rgba(255,255,255,0.06); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 5; }
   .topbar-left h1 { font-family: 'DM Serif Display', serif; font-size: 22px; color: var(--cream); }
@@ -50,8 +45,6 @@
   .clock-badge { background: rgba(232,38,26,0.12); border: 1px solid rgba(232,38,26,0.25); border-radius: 10px; padding: 8px 16px; font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); letter-spacing: 2px; }
   .day-badge { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 8px 14px; font-size: 12px; color: var(--text-muted); }
   .content { padding: 28px 32px; padding-bottom: 40px; }
-
-  /* ── STATS ── */
   .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
   .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; }
   .stat-icon { font-size: 22px; margin-bottom: 12px; }
@@ -61,16 +54,12 @@
   .stat-card.alert-card .stat-val { color: var(--gold); }
   .stat-card.success-card { border-color: rgba(76,175,125,0.3); background: rgba(76,175,125,0.05); }
   .stat-card.success-card .stat-val { color: var(--success); }
-
-  /* ── SECTIONS ── */
   .section { margin-bottom: 28px; }
   .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
   .section-title { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--cream); }
   .section-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
   .btn-small { background: rgba(232,38,26,0.12); border: 1px solid rgba(232,38,26,0.35); border-radius: 8px; padding: 7px 14px; color: var(--gold); font-size: 12px; cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
   .btn-small:hover { background: rgba(232,38,26,0.22); }
-
-  /* ── DEPT CARDS ── */
   .dept-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: start; }
   .dept-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; overflow: hidden; }
   .dept-header { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
@@ -90,8 +79,6 @@
   .btn-delete:hover { background: rgba(224,92,75,0.25); }
   .btn-edit { background: rgba(232,38,26,0.1); border: 1px solid rgba(232,38,26,0.3); border-radius: 6px; padding: 4px 8px; color: var(--gold); font-size: 11px; cursor: pointer; flex-shrink: 0; }
   .btn-edit:hover { background: rgba(232,38,26,0.25); }
-
-  /* ── TOAST ── */
   .sms-toast { position: fixed; bottom: 24px; right: 24px; width: 340px; background: #111827; border-radius: 18px; padding: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.7); z-index: 200; transform: translateY(120px); opacity: 0; transition: all 0.5s; border: 1px solid rgba(255,255,255,0.08); }
   .sms-toast.show { transform: translateY(0); opacity: 1; }
   .toast-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
@@ -99,8 +86,6 @@
   .toast-sender { font-size: 13px; font-weight: 600; }
   .toast-time { margin-left: auto; font-size: 11px; color: rgba(255,255,255,0.3); }
   .toast-body { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.5; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 10px 12px; }
-
-  /* ── MODALS ── */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 50; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
   .modal-overlay.show { opacity: 1; pointer-events: all; }
   .modal { background: #0d1f3c; border: 1px solid rgba(232,38,26,0.2); border-radius: 20px; padding: 32px; width: 440px; max-width: 95vw; max-height: 90vh; overflow-y: auto; }
@@ -113,14 +98,10 @@
   .btn-cancel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 20px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; }
   .btn-save { background: var(--gold); border: none; border-radius: 10px; padding: 10px 24px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
   .btn-save:hover { background: var(--gold-light); }
-
-  /* ── VIEWS ── */
   .view { display: none; }
   .view.active { display: block; }
   .db-tag { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; background: rgba(76,175,125,0.12); border: 1px solid rgba(76,175,125,0.25); border-radius: 6px; padding: 2px 8px; color: var(--success); margin-left: 8px; vertical-align: middle; }
   .loading { text-align: center; padding: 40px; color: var(--text-muted); }
-
-  /* ── SETTINGS ── */
   .settings-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 28px; max-width: 500px; margin-bottom: 20px; }
   .settings-box h3 { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--cream); margin-bottom: 20px; }
   .settings-field { margin-bottom: 16px; }
@@ -128,8 +109,6 @@
   .settings-field input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 10px 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none; }
   .btn-save-settings { background: var(--gold); border: none; border-radius: 10px; padding: 10px 24px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 8px; }
   .btn-save-settings:hover { background: var(--gold-light); }
-
-  /* ── LOGIN ── */
   .login-screen { position: fixed; inset: 0; background: var(--navy); display: flex; align-items: center; justify-content: center; z-index: 999; padding: 24px; }
   .login-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(232,38,26,0.25); border-radius: 24px; padding: 48px; width: 100%; max-width: 400px; }
   .login-logo { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--white); text-align: center; margin-bottom: 4px; }
@@ -142,23 +121,20 @@
   .login-btn { width: 100%; background: var(--gold); border: none; border-radius: 10px; padding: 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 24px; transition: all 0.2s; }
   .login-btn:hover { background: var(--gold-light); }
   .login-error { color: var(--alert); font-size: 13px; text-align: center; margin-top: 16px; display: none; }
-
-  /* ── BOTTOM NAV (mobile only) ── */
-  .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(7,15,35,0.98); border-top: 1px solid rgba(232,38,26,0.15); z-index: 100; padding: 8px 0 env(safe-area-inset-bottom, 8px); }
+  /* ── BOTTOM NAV ── */
+  .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(7,15,35,0.98); border-top: 1px solid rgba(232,38,26,0.15); z-index: 9999; padding: 8px 0 env(safe-area-inset-bottom, 8px); }
   .bottom-nav-inner { display: flex; justify-content: space-around; align-items: center; }
-  .bn-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 12px; cursor: pointer; border-radius: 10px; min-width: 56px; position: relative; }
-  .bn-item .bn-icon { font-size: 20px; }
+  .bn-item { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 8px 16px; cursor: pointer; border-radius: 10px; min-width: 64px; position: relative; -webkit-tap-highlight-color: transparent; }
+  .bn-item .bn-icon { font-size: 22px; }
   .bn-item .bn-label { font-size: 10px; color: var(--text-muted); }
   .bn-item.active .bn-label { color: var(--gold); }
   .bn-item .bn-badge { position: absolute; top: 2px; right: 8px; background: var(--alert); color: white; font-size: 9px; font-weight: 700; padding: 1px 5px; border-radius: 8px; }
   .bn-item .bn-badge.hidden { display: none; }
-
   /* ── MOBILE TOPBAR ── */
   .mobile-topbar { display: none; background: rgba(7,15,35,0.98); border-bottom: 1px solid rgba(232,38,26,0.12); padding: 14px 20px; position: sticky; top: 0; z-index: 5; align-items: center; justify-content: space-between; }
   .mobile-logo { font-family: 'DM Serif Display', serif; font-size: 20px; color: var(--white); }
   .mobile-logo span { color: var(--gold); }
   .mobile-clock { font-family: 'DM Serif Display', serif; font-size: 18px; color: var(--gold); }
-
   /* ── RESPONSIVE ── */
   @media (max-width: 768px) {
     body { display: block; overflow: auto; height: auto; }
@@ -197,8 +173,6 @@
 
 <!-- DASHBOARD -->
 <div class="dashboard" id="dashboard" style="display:none;width:100%">
-
-  <!-- Desktop sidebar -->
   <div class="sidebar">
     <div class="sidebar-logo">
       <div class="logo-text">Shift<span>Guard</span></div>
@@ -226,16 +200,11 @@
     </div>
   </div>
 
-  <!-- Main content -->
   <div class="main">
-
-    <!-- Mobile topbar -->
     <div class="mobile-topbar">
       <div class="mobile-logo">Shift<span>Guard</span></div>
       <div class="mobile-clock" id="mobile-clock">00:00</div>
     </div>
-
-    <!-- Desktop topbar -->
     <div class="topbar">
       <div class="topbar-left">
         <h1 id="page-title">Dashboard</h1>
@@ -246,9 +215,7 @@
         <div class="clock-badge" id="main-clock">00:00</div>
       </div>
     </div>
-
     <div class="content">
-      <!-- DASHBOARD VIEW -->
       <div class="view active" id="view-dashboard">
         <div class="stats-row">
           <div class="stat-card success-card"><div class="stat-icon">✅</div><div class="stat-val" id="stat-ok">–</div><div class="stat-label">Δήλωσαν βάρδια</div></div>
@@ -265,7 +232,6 @@
         </div>
       </div>
 
-      <!-- EMPLOYEES VIEW -->
       <div class="view" id="view-employees">
         <div class="section-header" style="margin-bottom:20px">
           <div><div class="section-title">👥 Εργαζόμενοι</div><div class="section-sub" id="emp-subtitle">Φόρτωση...</div></div>
@@ -274,19 +240,16 @@
         <div id="emp-list-full"></div>
       </div>
 
-      <!-- SCHEDULE VIEW -->
       <div class="view" id="view-schedule">
         <div class="section-title" style="margin-bottom:20px">📅 Εβδομαδιαίο Πρόγραμμα</div>
         <div id="schedule-grid"></div>
       </div>
 
-      <!-- ALERTS VIEW -->
       <div class="view" id="view-alerts">
         <div class="section-title" style="margin-bottom:20px">⚠️ Ειδοποιήσεις</div>
         <div id="alerts-view"></div>
       </div>
 
-      <!-- SETTINGS VIEW -->
       <div class="view" id="view-settings">
         <div class="section-title" style="margin-bottom:20px">⚙️ Ρυθμίσεις</div>
         <div class="settings-box">
@@ -307,30 +270,29 @@
       </div>
     </div>
   </div>
+</div>
 
-  <!-- BOTTOM NAV (mobile) -->
-  <div class="bottom-nav">
-    <div class="bottom-nav-inner">
-      <div class="bn-item active" id="bn-dashboard" onclick="setNavMobile('dashboard',this)">
-        <div class="bn-icon">📊</div>
-        <div class="bn-label">Dashboard</div>
-      </div>
-      <div class="bn-item" id="bn-employees" onclick="setNavMobile('employees',this)">
-        <div class="bn-icon">👥</div>
-        <div class="bn-label">Εργαζόμενοι</div>
-      </div>
-      <div class="bn-item" id="bn-alerts" onclick="setNavMobile('alerts',this)">
-        <div class="bn-icon">⚠️</div>
-        <div class="bn-label">Ειδοποιήσεις</div>
-        <div class="bn-badge hidden" id="alert-badge-mobile">0</div>
-      </div>
-      <div class="bn-item" id="bn-settings" onclick="setNavMobile('settings',this)">
-        <div class="bn-icon">⚙️</div>
-        <div class="bn-label">Ρυθμίσεις</div>
-      </div>
+<!-- BOTTOM NAV — ΕΞΩ από το #dashboard -->
+<div class="bottom-nav" id="bottom-nav">
+  <div class="bottom-nav-inner">
+    <div class="bn-item active" id="bn-dashboard" onclick="setNavMobile('dashboard',this)">
+      <div class="bn-icon">📊</div>
+      <div class="bn-label">Dashboard</div>
+    </div>
+    <div class="bn-item" id="bn-employees" onclick="setNavMobile('employees',this)">
+      <div class="bn-icon">👥</div>
+      <div class="bn-label">Εργαζόμενοι</div>
+    </div>
+    <div class="bn-item" id="bn-alerts" onclick="setNavMobile('alerts',this)">
+      <div class="bn-icon">⚠️</div>
+      <div class="bn-label">Ειδοποιήσεις</div>
+      <div class="bn-badge hidden" id="alert-badge-mobile">0</div>
+    </div>
+    <div class="bn-item" id="bn-settings" onclick="setNavMobile('settings',this)">
+      <div class="bn-icon">⚙️</div>
+      <div class="bn-label">Ρυθμίσεις</div>
     </div>
   </div>
-
 </div>
 
 <!-- TOAST -->
@@ -391,11 +353,7 @@ const SUPABASE_KEY = 'sb_publishable_s0Q12lYyridNT8Yos-7qVQ_z_3ACT95';
 const WORKER_URL = 'https://shiftkos-sms.thanos2-1.workers.dev';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const ICONS = {'Εστιατόριο':'🍽️','Μπαρ':'🍹','Κουζίνα':'👨‍🍳','Υποδοχή':'🏨','Οροφοκομία':'🛏️','Συντήρηση':'🔧','Κήπος':'🌿'};
-let employees = [];
-let currentHotel = null;
-let unreadAlerts = 0;
-let alertsSent = {};
-let editingEmpId = null;
+let employees = [], currentHotel = null, unreadAlerts = 0, alertsSent = {}, editingEmpId = null;
 
 function updateClock() {
   const now = new Date();
@@ -429,7 +387,8 @@ async function doLogin() {
   currentHotel = data;
   unreadAlerts = 0; alertsSent = {};
   document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('dashboard').style.display = 'flex';
+  // ΤΟ FIX: block στο mobile, flex στο desktop
+  document.getElementById('dashboard').style.display = window.innerWidth <= 768 ? 'block' : 'flex';
   document.getElementById('hotel-name-display').textContent = '🏨 ' + data.name;
   document.getElementById('set-hotel-name').value = data.name;
   document.getElementById('set-master-phone').value = data.master_phone || '';
@@ -473,10 +432,7 @@ function updateStats() {
   if (unreadAlerts > 0) {
     bs.textContent = unreadAlerts; bs.classList.remove('hidden');
     bm.textContent = unreadAlerts; bm.classList.remove('hidden');
-  } else {
-    bs.classList.add('hidden');
-    bm.classList.add('hidden');
-  }
+  } else { bs.classList.add('hidden'); bm.classList.add('hidden'); }
 }
 
 function renderDepts() {
@@ -584,7 +540,6 @@ function setNavMobile(view, el) {
   document.querySelectorAll('.bn-item').forEach(function(n){n.classList.remove('active');});
   el.classList.add('active');
   switchView(view);
-  if (view==='alerts') { unreadAlerts=0; document.getElementById('alert-badge-mobile').classList.add('hidden'); document.getElementById('alert-badge-sidebar').classList.add('hidden'); }
 }
 
 function switchView(view) {
@@ -594,7 +549,7 @@ function switchView(view) {
   document.getElementById('page-title').textContent = titles[view];
   if (view==='employees') renderEmployeesFull();
   if (view==='schedule') renderSchedule();
-  if (view==='alerts') { unreadAlerts=0; document.getElementById('alert-badge-sidebar').classList.add('hidden'); renderAlerts(); }
+  if (view==='alerts') { unreadAlerts=0; document.getElementById('alert-badge-sidebar').classList.add('hidden'); document.getElementById('alert-badge-mobile').classList.add('hidden'); renderAlerts(); }
   window.scrollTo(0,0);
 }
 
